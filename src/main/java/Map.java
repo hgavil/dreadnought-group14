@@ -4,10 +4,10 @@ import java.util.concurrent.*;
 public class Map {
     int SIZE = 10; // size of map 10x10x10
 
-    Square[][] space;
+    Square[][][] space;
 
     public Map(){
-        space = new Square[SIZE][SIZE];
+        space = new Square[SIZE][SIZE][SIZE];
         // generate 100 random sprites
         int rNum1, rNum2, rNum3;
         int i = 0;
@@ -19,9 +19,9 @@ public class Map {
             rNum2 = ThreadLocalRandom.current().nextInt(0, 11);
             rNum3 = ThreadLocalRandom.current().nextInt(0, 11);
 
-            if (space[rNum1][rNum2].Occupied() == false){
-                space[rNum1][rNum2].changeOccupied(true);
-                space[rNum1][rNum2].changeItem(-1);
+            if (space[rNum1][rNum2][rNum3].Occupied() == false){
+                space[rNum1][rNum2][rNum3].changeOccupied(true);
+                space[rNum1][rNum2][rNum3].changeItem(-1);
                 i = i+1;
             }
             // else repeat to fill up 100 squares

@@ -1,3 +1,5 @@
+package Ships;
+
 import java.util.Vector;
 
 public abstract class Spaceship {

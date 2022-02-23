@@ -1,3 +1,5 @@
+import Ships.Spaceship;
+
 import java.util.ArrayList;
 
 public class Terrain {

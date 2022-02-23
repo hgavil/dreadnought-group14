@@ -1,7 +1,9 @@
-public class Stealthship extends Spaceship {
-    String name = "Stealthship";
-    int numberOfShots = 2;
-    int health = 2;
+package Ships;
+
+public class Dreadnought extends Spaceship {
+    String name = "Ships.Dreadnought";
+    int health = 4;
+    int numberOfShots = 4;
 
     public int getSpecialAttack() {
         // TODO Auto-generated method stub
@@ -11,6 +13,5 @@ public class Stealthship extends Spaceship {
     public String getName() {
         return name;
     }
-
 
 }

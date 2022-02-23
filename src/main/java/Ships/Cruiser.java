@@ -1,7 +1,9 @@
-public class Carrier extends Spaceship {
-    String name = "Carrier";
+package Ships;
+
+public class Cruiser extends Spaceship {
+    String name = "Ships.Cruiser";
     int numberOfShots = 3;
-    int health = 4;
+    int health = 3;
 
     public int getSpecialAttack() {
         // TODO Auto-generated method stub

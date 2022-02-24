@@ -1,25 +1,66 @@
 package Ships;
 
-import java.util.Vector;
+import Map.Square;
 
 public abstract class Spaceship {
-    private String name;
-    private int numberOfShots;
-    private int health;
-    private Vector position;
-
-    public abstract int getSpecialAttack();
-
-    public void changeHealth(int modifier) {
-        health += modifier;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setNumberofShots(int modifier) {
-        numberOfShots = modifier;
-    }
+	private String name;
+	private int numberOfShots;
+	private int x = 0; // ships current x position
+	private int y = 0; // ships current y position
+	private Square[][][] position = new Square[x][y][0];
+	private int health = 0;
+	public abstract int getSpecialAttack();
+	
+	public void changeHealth(int modifier) {
+		health += modifier;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public int getNumShots() {
+		return numberOfShots;
+	}
+	
+	public Square[][][] getPosition() {
+		return position;
+	}
+	
+	
+	public void setXPos(int modifier) { // set the x position of the ship
+	    position[x][y][0].changeOccupied(false); // old position no longer occupied
+	    int x = modifier;
+	    Square[][][] nuPos = new Square[x][y][0];
+	    setPosition(nuPos);
+	    getPosition()[x][y][0].changeOccupied(true); // new position is occupied, update
+	}
+	
+	public void setYPos(int modifier) { // set the y position of the ship
+	    position[x][y][0].changeOccupied(false); // old position no longer occupied
+	    int y = modifier;
+	    Square[][][] nuPos = new Square[x][y][0];
+	    setPosition(nuPos);
+	    getPosition()[x][y][0].changeOccupied(true); // new position is occupied, update
+	}
+	
+	public int getXPos() {
+		return x;
+	}
+	
+	public int getYPos() {
+		return y;
+	}
+	public void setPosition(Square[][][] modifier) {
+		position = modifier;
+	}
+	
+	public void setName(String modifier) {
+		name = modifier;
+	}
+	
+	public void setNumberofShots(int modifier) {
+		numberOfShots = modifier;
+	}
 
 }

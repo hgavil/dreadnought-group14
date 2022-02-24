@@ -5,11 +5,12 @@ public class Stealthship extends Spaceship {
     int numberOfShots = 2;
     int health = 2;
 
-    public int getSpecialAttack() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
+	public int getSpecialAttack() {
+		System.out.println("Reserve ammunition deployed!\n");
+		numberOfShots += 4;
+		return 1; // cannot fail, always return 1
+	}
+	
     public String getName() {
         return name;
     }

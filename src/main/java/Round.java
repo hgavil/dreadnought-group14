@@ -1,6 +1,7 @@
 import tools.Pair;
 
 import java.util.List;
+import java.util.Scanner;
 import java.util.Vector;
 
 public class Round {
@@ -34,7 +35,7 @@ private int turn;
 	 return("Winner Selected");
  }
 
-  public Round(Player p1, Player p2){
+  public Round(Player p1, Player p2, Scanner in){
     turn = 0;
     //player 1/ turn 0 starts 
 
@@ -43,7 +44,7 @@ private int turn;
       // player chooses to attack or do a special move
       // player 1
       if (turn == 0){
-        chooseAttack(p1);
+        chooseAttack(p1, in);
       }
       else { // player 2
         ;
@@ -54,10 +55,25 @@ private int turn;
     }
   }
 
-  private Boolean chooseAttack(Player p){
+  private Boolean chooseAttack(Player p, Scanner in){
     Boolean safeInput = false;
+    int userInput = -1;
+    System.out.println("Choose 1 for normal attack or 2 for special move\n");
     do{
-      System.out.println("Choose 1 for normal attack or 2 for special move\n");
+      if (in.hasNextInt()){
+        // read the player's input
+        userInput = in.nextInt();
+
+        // if it's something other than 1 or 2, continue
+        if (userInput != 1 && userInput != 2)
+          continue;
+        
+        ;
+      }
+      else{
+        System.out.println("Please choose 1 or 2");
+        in.nextLine();
+      }
     } while(!safeInput);
     return false;
   }

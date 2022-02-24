@@ -33,4 +33,32 @@ private int turn;
 	 }
 	 return("Winner Selected");
  }
+
+  public Round(Player p1, Player p2){
+    turn = 0;
+    //player 1/ turn 0 starts 
+
+    while (p1.Ships().size() != 0 && p2.Ships().size() != 0){
+
+      // player chooses to attack or do a special move
+      // player 1
+      if (turn == 0){
+        chooseAttack(p1);
+      }
+      else { // player 2
+        ;
+      }
+
+      // alternate and repeat
+      nextTurn();
+    }
+  }
+
+  private Boolean chooseAttack(Player p){
+    Boolean safeInput = false;
+    do{
+      System.out.println("Choose 1 for normal attack or 2 for special move\n");
+    } while(!safeInput);
+    return false;
+  }
 }

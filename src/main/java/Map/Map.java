@@ -78,14 +78,35 @@ public class Map {
   // show 2D board using basic ASCII character
   // '|', '-': wall
   // a number shows which player
-  // 'S': sprite
+  // 'H': this spot has been hit and no player was here
   // an empty space means theres nothing
   // ----------
-  // |1|0|
+  // |1| | |H| |
+  // | |H|2| | |
+  // ...
+  // -----------
   void show2D(){
-    for (int i=0; i<12; i++){
-      ;
+    //print "----------"
+    for (int i=0; i<10; i++)
+      System.out.print("-");
+    System.out.print("\n");
+
+    for (int i=0; i<10; i++){
+      for (int j=0; j<10; j++){
+        if (space[i][j].Item() > 0) // player
+          System.out.print("|"+space[i][j].Item());
+        else if (space[i][j].Hit() == true) // hit and no player
+          System.out.print("|H");
+        else
+          System.out.print("| ");
+      }
+      System.out.print("|\n");
     }
+
+    //print "----------"
+    for (int i=0; i<10; i++)
+      System.out.print("-");
+    System.out.print("\n");
   }
 
 }

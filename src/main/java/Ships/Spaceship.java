@@ -30,28 +30,30 @@ public abstract class Spaceship {
 
 
 	public void setXPos(int modifier) { // set the x position of the ship
-		position[x][y].changeOccupied(false); // old position no longer occupied
-		int x = modifier;
-		Square[][] nuPos = new Square[x][y];
-		setPosition(nuPos);
-		getPosition()[x][y].changeOccupied(true); // new position is occupied, update
+//		position[x][y].changeOccupied(false); // old position no longer occupied
+//		int x = modifier;
+//		Square[][] nuPos = new Square[x][y];
+//		setPosition(nuPos);
+//		getPosition()[x][y].changeOccupied(true); // new position is occupied, update
+		this.x = modifier;
 	}
 
 	public void setYPos(int modifier) { // set the y position of the ship
-		position[x][y].changeOccupied(false); // old position no longer occupied
-		int y = modifier;
-		Square[][] nuPos = new Square[x][y];
-		setPosition(nuPos);
-		getPosition()[x][y].changeOccupied(true); // new position is occupied, update
+//		position[x][y].changeOccupied(false); // old position no longer occupied
+//		int y = modifier;
+//		Square[][] nuPos = new Square[x][y];
+//		setPosition(nuPos);
+//		getPosition()[x][y].changeOccupied(true); // new position is occupied, update
+		this.y = modifier;
 	}
 
 	public void setXYPos(int modX, int modY) {
-		getPosition()[x][y].changeOccupied(false);
-		x = modX;
-		y = modY;
-		Square[][] nuPos = new Square[x][y];
+		getPosition()[this.x][this.y].changeOccupied(false);
+		this.x = modX;
+		this.y = modY;
+		Square[][] nuPos = new Square[this.x][this.y];
 		setPosition(nuPos);
-		nuPos[x][y].changeOccupied(true);
+		nuPos[this.x][this.y].changeOccupied(true);
 	}
 
 	public int getXPos() {

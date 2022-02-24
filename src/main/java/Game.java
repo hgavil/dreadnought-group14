@@ -1,5 +1,6 @@
 // main game logic
 
+import Map.Square;
 import Map.Terrain;
 import Ships.*;
 import tools.Pair;
@@ -26,18 +27,22 @@ public class Game {
 
     public void setupGame(Player p1, Player p2, Scanner in, Terrain gameMap) {
 
-        chooseShips(p1, in);
+
         // player 1 picks (temp) 3 ships that they want to use, and where they will be placed on the map
         // 1. pick ship
         // 2. choose coordinates
+        chooseShips(p1, in, gameMap);
 
         // now player 2 does it
+        for (int i = 0; i < 50; i++) {
+            System.out.println("-");
+        }
+        System.out.println("Player 2, please choose your ships!");
+        chooseShips(p2 ,in, gameMap);
 
-        // create a new match
-        // create the first round
     }
 
-    public void chooseShips (Player player, Scanner in) {
+    public void chooseShips (Player player, Scanner in, Terrain gameMap) {
         int userInput;
         boolean safeInput;
 
@@ -66,6 +71,7 @@ public class Game {
                     else {
                         System.out.println("You chose a " + shipTypes[userInput-1] + "!");
                         newShip = createShip(userInput);    // initialize the new ship as the type of ship it is
+                        newShip.setName(shipTypes[userInput-1]);
                         in.nextLine();
                         safeInput = true;
                     }
@@ -76,22 +82,44 @@ public class Game {
                 }
             } while (!safeInput);
 
-            // reset the checks
-            safeInput = false;
-            userInput = -1;
 
-            System.out.println("Choose your ship's x coordinate from 0-9.");
-            // take the user input for the x coordinate
+            // check if the thing is occupied
+            boolean spaceFree = false;
             do {
 
-            } while (!safeInput);
+                // choose x coords
+                System.out.println("Choose your ship's x coordinate from 0-9.");
+                do {
+                    if (setCoordinates(in, 1, newShip)) safeInput = true;
+                } while (!safeInput);
 
-            // reset the checks
-            safeInput = false;
-            userInput = -1;
 
-            System.out.println("Choose your ship's y coordinate from 0-9.");
-            while (!setCoordinates(in, 1, newShip));
+                // reset the checks
+                safeInput = false;
+
+                // choose y coords
+                System.out.println("Choose your ship's y coordinate from 0-9.");
+                do {
+                    if (setCoordinates(in, 2, newShip)) safeInput = true;
+                } while (!safeInput);
+
+                Square mapSpace = gameMap.getMap().getSpace()[newShip.getXPos()][newShip.getYPos()];
+                if (!mapSpace.Occupied()) {
+                    mapSpace.changeOccupied(true);
+                    spaceFree = true;
+                }
+                else {
+                    System.out.println("That space is occupied! Try again.");
+                }
+            } while (!spaceFree);
+
+
+            // add the ship to the player's list of ships.
+            System.out.println("Your ship is a: " + newShip.getName() + " at coordinates (" + newShip.getXPos() + ", " + newShip.getYPos() + ").");
+            player.addShip(newShip);
+
+            System.out.println();
+
 
         }
     }
@@ -105,6 +133,7 @@ public class Game {
     }
 
     public boolean setCoordinates(Scanner in, int axis, Spaceship newShip) {
+        System.out.println("setting coord");
         int userInput = -1;
         // check if player correctly input an int value
         if (in.hasNextInt()) {

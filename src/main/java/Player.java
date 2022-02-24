@@ -34,7 +34,8 @@ public class Player {
       return name;
   }
 
-
-
+  public Integer getScore() {
+    return score;
+  }
 
 }

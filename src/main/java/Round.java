@@ -29,12 +29,15 @@ private int turn;
 	 return true;
  }
  public String getWinner() {
-	 String playerName = " ";
+	 int playerName = 0;
 	 int Max = 0;
 	 for(Player i : players) {
-		// if(i.score ) need a getter to get player's name and score
+		 if(i.getScore() > Max) {
+			 Max = i.getScore();
+			 playerName = i.getName();
+		 }
 	 }
-	 return("Winner Selected");
+	 return("Winner Selected! Player: " + playerName + " is the winner with a score of " + Max);
  }
 
   public Round(Player p1, Player p2, Terrain t, Scanner in){

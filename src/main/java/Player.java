@@ -30,6 +30,10 @@ public class Player {
     remainingShips.add(ship);
   }
 
+  public Integer getName() {
+      return name;
+  }
+
 
 
 

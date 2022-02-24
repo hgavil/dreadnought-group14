@@ -59,7 +59,7 @@ public class Map {
     // generate 100 random sprites
     int rNum1, rNum2;
     i = 0;
-    while (i < 100){
+    while (i < 10){
       // nextInt is normally exclusive of the top value,
       // so add 1 to make it inclusive
       // ThreadLocalRandom.current().nextInt(min, max + 1)
@@ -75,6 +75,18 @@ public class Map {
     }
   }
 
+  // show 2D board using basic ASCII character
+  // '|', '-': wall
+  // a number shows which player
+  // 'S': sprite
+  // an empty space means theres nothing
+  // ----------
+  // |1|0|
+  void show2D(){
+    for (int i=0; i<12; i++){
+      ;
+    }
+  }
 
 }
 

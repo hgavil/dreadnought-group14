@@ -14,6 +14,7 @@ public class Player {
 
     // player shoots the given location
     boolean shoot(Vector<Vector<Integer>> location) {
+
         return true;
     }
 

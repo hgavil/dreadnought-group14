@@ -1,5 +1,7 @@
 package Ships;
 
+import Map.Square;
+
 public abstract class Spaceship {
 	private String name;
 	private int numberOfShots;

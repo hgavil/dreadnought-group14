@@ -1,5 +1,7 @@
 package Ships;
 
+import Map.Square;
+
 public class Corvette extends Spaceship {
     String name = "Ships.Corvette";
     int numberOfShots = 1;

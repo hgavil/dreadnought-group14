@@ -1,3 +1,5 @@
+import tools.Pair;
+
 import java.util.List;
 import java.util.Vector;
 

@@ -34,11 +34,14 @@ public class Game {
         chooseShips(p1, in, gameMap);
 
         // now player 2 does it
-        for (int i = 0; i < 50; i++) {
-            System.out.println("-");
-        }
+        hideScreen();
+
         System.out.println("Player 2, please choose your ships!");
         chooseShips(p2 ,in, gameMap);
+
+        hideScreen();
+
+        System.out.println("Both players have selected their ships! The game will now begin.");
 
     }
 
@@ -103,9 +106,11 @@ public class Game {
                     if (setCoordinates(in, 2, newShip)) safeInput = true;
                 } while (!safeInput);
 
+                // put the space on the map
                 Square mapSpace = gameMap.getMap().getSpace()[newShip.getXPos()][newShip.getYPos()];
                 if (!mapSpace.Occupied()) {
                     mapSpace.changeOccupied(true);
+                    mapSpace.changeItem(player.getName());
                     spaceFree = true;
                 }
                 else {
@@ -187,4 +192,10 @@ public class Game {
         return ship;
     }
 
+    public void hideScreen() {
+        // print out a barrier so players cant see what the other one chose
+        for (int i = 0; i < 50; i++) {
+            System.out.println("-");
+        }
+    }
 }

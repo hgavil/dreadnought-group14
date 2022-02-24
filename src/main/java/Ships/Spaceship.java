@@ -27,17 +27,17 @@ public abstract class Spaceship {
 	
 	
 	public void setXPos(int modifier) { // set the x position of the ship
-		position[x][y][0].changeOccupied(false); // old position no longer occupied
-		int x = modifier;
-		Square[][][] nuPos = new Square[x][y][0];
+	    position[x][y][0].changeOccupied(false); // old position no longer occupied
+	    int x = modifier;
+	    Square[][][] nuPos = new Square[x][y][0];
 	    setPosition(nuPos);
 	    getPosition()[x][y][0].changeOccupied(true); // new position is occupied, update
 	}
 	
 	public void setYPos(int modifier) { // set the y position of the ship
-		position[x][y][0].changeOccupied(false); // old position no longer occupied
-		int y = modifier;
-		Square[][][] nuPos = new Square[x][y][0];
+	    position[x][y][0].changeOccupied(false); // old position no longer occupied
+	    int y = modifier;
+	    Square[][][] nuPos = new Square[x][y][0];
 	    setPosition(nuPos);
 	    getPosition()[x][y][0].changeOccupied(true); // new position is occupied, update
 	}

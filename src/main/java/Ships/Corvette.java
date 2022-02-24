@@ -9,18 +9,20 @@ public class Corvette extends Spaceship {
 	public int getSpecialAttack() {
 		System.out.println("Corvette thrusters are primed!\n");
 		Square[][][] curPos = new Square[getXPos()][getYPos()][0];
+		curPos[getXPos()][getYPos()][0].changeOccupied(false); // old position no longer occupied
 		int val = getYPos();
 		val += 3;
 		if(val > 10) {
 			System.out.print("boost cannot be completed!\n");
+			curPos[getXPos()][getYPos()][0].changeOccupied(true); // move can't be completed, so old positon is stil occupied
 			return 0; // unsuccesful
 		}
-		setYPos(val);
+		setYPos(val); // update y position...
+		setPosition(curPos); // update positon
+		getPosition()[getXPos()][getYPos()][0].changeOccupied(true); // update new position to be occupied
+		
 		return 1; //successful
 	}
-    public String getName() {
-        return name;
-    }
 
 
 }

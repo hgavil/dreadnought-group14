@@ -13,4 +13,6 @@ public class Terrain {
         this.spaceships = new ArrayList<>();
         this.map = new Map();
     }
+
+    public Map getMap() { return map; }
 }

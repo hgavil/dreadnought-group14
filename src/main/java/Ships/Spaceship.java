@@ -7,7 +7,7 @@ public abstract class Spaceship {
 	private int numberOfShots;
 	private int x = 0; // ships current x position
 	private int y = 0; // ships current y position
-	private Square[][][] position = new Square[x][y][0];
+	private Square[][] position = new Square[x][y];
 	private int health = 0;
 	public abstract int getSpecialAttack();
 	
@@ -23,25 +23,34 @@ public abstract class Spaceship {
 		return numberOfShots;
 	}
 	
-	public Square[][][] getPosition() {
+	public Square[][] getPosition() {
 		return position;
 	}
 	
 	
 	public void setXPos(int modifier) { // set the x position of the ship
-	    position[x][y][0].changeOccupied(false); // old position no longer occupied
-	    int x = modifier;
-	    Square[][][] nuPos = new Square[x][y][0];
+		position[x][y].changeOccupied(false); // old position no longer occupied
+		int x = modifier;
+		Square[][] nuPos = new Square[x][y];
 	    setPosition(nuPos);
-	    getPosition()[x][y][0].changeOccupied(true); // new position is occupied, update
+	    getPosition()[x][y].changeOccupied(true); // new position is occupied, update
 	}
 	
 	public void setYPos(int modifier) { // set the y position of the ship
-	    position[x][y][0].changeOccupied(false); // old position no longer occupied
-	    int y = modifier;
-	    Square[][][] nuPos = new Square[x][y][0];
+		position[x][y].changeOccupied(false); // old position no longer occupied
+		int y = modifier;
+		Square[][] nuPos = new Square[x][y];
 	    setPosition(nuPos);
-	    getPosition()[x][y][0].changeOccupied(true); // new position is occupied, update
+	    getPosition()[x][y].changeOccupied(true); // new position is occupied, update
+	}
+	
+	public void setXYPos(int modX,int modY) {
+		getPosition()[x][y].changeOccupied(false);
+		x = modX;
+		y = modY;
+		Square[][] nuPos = new Square[x][y];
+		setPosition(nuPos);
+		nuPos[x][y].changeOccupied(true);
 	}
 	
 	public int getXPos() {
@@ -51,7 +60,7 @@ public abstract class Spaceship {
 	public int getYPos() {
 		return y;
 	}
-	public void setPosition(Square[][][] modifier) {
+	public void setPosition(Square[][] modifier) {
 		position = modifier;
 	}
 	
@@ -61,6 +70,6 @@ public abstract class Spaceship {
 	
 	public void setNumberofShots(int modifier) {
 		numberOfShots = modifier;
-	}
+	
 
 }

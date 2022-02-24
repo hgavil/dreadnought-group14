@@ -9,11 +9,11 @@ public class Cruiser extends Spaceship {
 
 	public int getSpecialAttack() {
 		System.out.println("Cluster bombs away!\n");
-		Square[][][] attack = getPosition();
+		Square[][] attack = getPosition();
 		for(int i = 0; i < 3; i++) { // checking x positions...
 			for(int j = 0; i < 3; j++) { // checking y positions...
-				if(attack[getXPos() + i][getYPos() + j][0].Hit() == false) { // checking for a hit
-					attack[getXPos() + i][getYPos()+ j][0].changeHit();
+				if(attack[getXPos() + i][getYPos() + j].Hit() == false) { // checking for a hit
+					attack[getXPos() + i][getYPos()+ j].changeHit();
 					return 1; 
 				}
 			}

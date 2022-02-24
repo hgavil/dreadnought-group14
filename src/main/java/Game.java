@@ -31,6 +31,7 @@ public class Game {
         // player 1 picks (temp) 3 ships that they want to use, and where they will be placed on the map
         // 1. pick ship
         // 2. choose coordinates
+        System.out.println("Player 1, please choose your ships!");
         chooseShips(p1, in, gameMap);
 
         // now player 2 does it

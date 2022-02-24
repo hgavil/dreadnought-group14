@@ -7,7 +7,7 @@ public abstract class Spaceship {
 	private int numberOfShots;
 	private int x = 0; // ships current x position
 	private int y = 0; // ships current y position
-	private Square[][][] position = new Square[x][y][0];
+	private Square[][] position = new Square[x][y];
 	private int health = 0;
 	public abstract int getSpecialAttack();
 	

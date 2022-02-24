@@ -1,6 +1,5 @@
 package Map;
 
-import java.util.Random;
 import java.util.concurrent.*;
 
 public class Map {
@@ -44,6 +43,10 @@ public class Map {
     }
   }
   */
+
+  public Square[][] getSpace() {
+    return space;
+  }
 
   // modified to be 2D
   public Map(){

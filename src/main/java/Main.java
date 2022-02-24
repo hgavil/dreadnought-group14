@@ -2,6 +2,8 @@
 
 import Map.Terrain;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -17,6 +19,8 @@ public class Main {
         // create map
         Terrain gameMap = new Terrain();
 
+        Scanner in = new Scanner(System.in);
+
 
         /* setup phase */
         /* all console prints done in main, the rest is done in the game class */
@@ -28,7 +32,7 @@ public class Main {
         System.out.println("To begin, Player 1 will set up their ships first.");
 
         // run setup method
-        game.setupGame(p1, p2);
+        game.setupGame(p1, p2, in, gameMap);
 
 
         // console prints directions for the player

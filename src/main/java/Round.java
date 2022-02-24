@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 
+import Map.Terrain;
+
 public class Round {
 private List<Player> players;
 private Pair<Boolean,Vector<Vector<Integer>>> hitMap;
@@ -35,7 +37,7 @@ private int turn;
 	 return("Winner Selected");
  }
 
-  public Round(Player p1, Player p2, Scanner in){
+  public Round(Player p1, Player p2, Terrain t, Scanner in){
     turn = 0;
     //player 1/ turn 0 starts 
 
@@ -44,7 +46,7 @@ private int turn;
       // player chooses to attack or do a special move
       // player 1
       if (turn == 0){
-        chooseAttack(p1, in);
+        chooseAttack(p1, t, in);
       }
       else { // player 2
         ;
@@ -55,10 +57,12 @@ private int turn;
     }
   }
 
-  private Boolean chooseAttack(Player p, Scanner in){
+  private Boolean chooseAttack(Player p, Terrain t, Scanner in){
     Boolean safeInput = false;
     int userInput = -1;
+    int x, y;
     System.out.println("Choose 1 for normal attack or 2 for special move\n");
+    System.out.println("Choose 1 for now since special move has not been implemented\n");
     do{
       if (in.hasNextInt()){
         // read the player's input
@@ -68,7 +72,16 @@ private int turn;
         if (userInput != 1 && userInput != 2)
           continue;
         
-        ;
+        if(userInput == 1){
+          do{
+            x = chooseXY(0, in);
+            y = chooseXY(0, in);
+
+          } while (t.map.space[x][y].Occupied())
+        }
+        else{
+          System.out.println("Special move to be implemented\n");
+        }
       }
       else{
         System.out.println("Please choose 1 or 2");
@@ -76,5 +89,30 @@ private int turn;
       }
     } while(!safeInput);
     return false;
+  }
+
+  // val holds 0 for x and 1 for y
+  public int chooseXY(int val, Scanner in){
+    int userInput = -1;
+    // choose x
+    do{
+      if (val == 0)
+        System.out.println("Pick x coordinate from 0-9");
+      else  
+        System.out.println("Pick y coordinate from 0-9");
+      userInput = getUserInput(in);
+    } while (userInput < 0 || userInput > 9);
+    return userInput;
+  }
+
+  public int getUserInput(Scanner in){
+    int num;
+    while(!in.hasNextInt()){
+      System.out.println("Please input a number\n");
+      in.nextLine();
+    }
+
+    num = in.nextInt();
+    return num;
   }
 }

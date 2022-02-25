@@ -34,8 +34,8 @@ private int turn;
 	 int playerName = 0;
 	 int Max = 0;
 	 for(Player i : players) {
-		 if(i.getScore() > Max) {
-			 Max = i.getScore();
+		 if(i.getWins() > Max) {
+			 Max = i.getWins();
 			 playerName = i.getName();
 		 }
 	 }
@@ -43,7 +43,7 @@ private int turn;
  }
 
   public Round(Player p1, Player p2, Terrain t, Scanner in){
-    turn = 0;
+    turn = 0;       // player 1 is turn 0, player 2 is turn 1
     int hit = 0;    // to store who we hit: player, nothing, or sprite
     int attack = 0; // which type of attack
     int x = -1;        // x and y of where we attacked
@@ -66,7 +66,9 @@ private int turn;
       if(attack == 1){
         x = chooseXY(0, in);
         y = chooseXY(0, in);
-        while (t.getMap().getSpace()[x][y].Hit()){
+        hit = t.getMap().getSpace()[x][y].Item();
+        // dont want to hit and already hit spot or ourselves
+        while (t.getMap().getSpace()[x][y].Hit() || hit == turn+1){
           System.out.println(x+", "+y+" has been hit, please choose another pair\n");
           x = chooseXY(0, in);
           y = chooseXY(0, in);
@@ -81,6 +83,7 @@ private int turn;
 
       // if we hit a player, remove ship from list and update map that we hit the spot
       if (hit == 1){ // player 1
+        addScore(turn, p1, p2);
         for(int i=0; i<p1.Ships().size(); i++){
           if (p1.Ships().get(i).getXPos() == x && p1.Ships().get(i).getYPos() == y){
             p1.Ships().remove(i);
@@ -89,6 +92,7 @@ private int turn;
         }
       }
       else if (hit == 2){ // player 2
+        addScore(turn, p1, p2);
         for(int i=0; i<p2.Ships().size(); i++){
           if (p2.Ships().get(i).getXPos() == x && p2.Ships().get(i).getYPos() == y){
             p2.Ships().remove(i);
@@ -107,11 +111,18 @@ private int turn;
     }
 
     if (p1.Ships().size() == 0){
-      // player 2 won
+      p2.addToWins();// player 2 won
     }
     else{
-      // player 1 won
+      p1.addToWins();// player 1 won
     }
+  }
+
+  public void addScore(int turn, Player p1, Player p2){
+    if (turn == 0)
+      p1.addToScore();
+    else
+      p2.addToScore();
   }
 
   private int chooseAttack(Player p, Scanner in){

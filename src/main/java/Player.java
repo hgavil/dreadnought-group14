@@ -10,6 +10,7 @@ public class Player {
   private ArrayList<Spaceship> remainingShips;
   private Pair<Boolean, Vector<Vector<Integer>>> shots;
   private int score;
+  private int wins;
 
   public Player(Integer Name){
     this.name = Name;
@@ -36,6 +37,18 @@ public class Player {
 
   public Integer getScore() {
     return score;
+  }
+
+  public void addToScore(){
+    score++;
+  }
+
+  public Integer getWins(){
+    return wins;
+  }
+
+  public void addToWins(){
+    wins++;
   }
 
 }

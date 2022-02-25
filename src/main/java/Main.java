@@ -37,6 +37,8 @@ public class Main {
         /* game phase */
 
         // console prints game start messages and turn swap messages
+        Round match = new Round(p1, p2, gameMap, in);
+        match.getWinner();
 
 
 

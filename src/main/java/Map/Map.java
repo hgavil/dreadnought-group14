@@ -96,10 +96,12 @@ public class Map {
 
     for (int i=0; i<10; i++){
       for (int j=0; j<10; j++){
-        if (space[i][j].Item() > 0) // player
-          System.out.print("|"+space[i][j].Item());
-        else if (space[i][j].Hit() == true) // hit and no player
-          System.out.print("|H");
+        if (space[i][j].Hit() == true){ // hit
+          if (space[i][j].Item() > 0)   // player
+            System.out.print("|"+space[i][j].Item());
+          else
+            System.out.print("|H");
+        }
         else
           System.out.print("| ");
       }

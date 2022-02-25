@@ -70,7 +70,10 @@ private int turn;
         hit = t.getMap().getSpace()[x][y].Item();
         // dont want to hit and already hit spot or ourselves
         while (t.getMap().getSpace()[x][y].Hit() || hit == turn+1){
-          System.out.println(x+", "+y+" has been hit, please choose another pair\n");
+          if (hit == turn+1)
+            System.out.println(x+", "+y+" your ship is here. What kind of big brain play are you going for? Please choose another pair\n");
+          else
+            System.out.println(x+", "+y+" has been hit, please choose another pair\n");
           x = chooseXY(0, in);
           y = chooseXY(1, in);
           // store what we hit

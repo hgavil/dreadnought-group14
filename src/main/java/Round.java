@@ -65,13 +65,13 @@ private int turn;
 
       if(attack == 1){
         x = chooseXY(0, in);
-        y = chooseXY(0, in);
+        y = chooseXY(1, in);
         hit = t.getMap().getSpace()[x][y].Item();
         // dont want to hit and already hit spot or ourselves
         while (t.getMap().getSpace()[x][y].Hit() || hit == turn+1){
           System.out.println(x+", "+y+" has been hit, please choose another pair\n");
           x = chooseXY(0, in);
-          y = chooseXY(0, in);
+          y = chooseXY(1, in);
           // store what we hit
           hit = t.getMap().getSpace()[x][y].Item();
         }

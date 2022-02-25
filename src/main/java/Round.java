@@ -55,7 +55,7 @@ private int turn;
     players.add(p1);
 
     for(Player i : players)
-      System.out.println("Welcome player "+p1.getName()+"!\n");
+      System.out.println("Welcome player "+i.getName()+"!\n");
 
     while (p1.Ships().size() != 0 && p2.Ships().size() != 0){
       t.getMap().show2D();

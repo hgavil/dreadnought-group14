@@ -9,7 +9,7 @@ import Map.Terrain;
 import Ships.Spaceship;
 
 public class Round {
-private List<Player> players;
+private ArrayList<Player> players;
 private Pair<Boolean,Vector<Vector<Integer>>> hitMap;
 private float time;
 private int turn;
@@ -30,7 +30,7 @@ private int turn;
  public boolean checkPlayers() { 
 	 return true;
  }
- public String getWinner() {
+ public void getWinner() {
 	 int playerName = 0;
 	 int Max = 0;
 	 for(Player i : players) {
@@ -39,7 +39,8 @@ private int turn;
 			 playerName = i.getName();
 		 }
 	 }
-	 return("Winner Selected! Player: " + playerName + " is the winner with a score of " + Max);
+   System.out.println("Winner Selected! Player: " + playerName + " is the winner with a score of " + Max);
+	 return;
  }
 
   public Round(Player p1, Player p2, Terrain t, Scanner in){
@@ -49,6 +50,12 @@ private int turn;
     int x = -1;        // x and y of where we attacked
     int y = -1;
     //player 1/ turn 0 starts 
+
+    players.add(p1);
+    players.add(p1);
+
+    for(Player i : players)
+      System.out.println("Welcome player "+p1.getName()+"!\n");
 
     while (p1.Ships().size() != 0 && p2.Ships().size() != 0){
       t.getMap().show2D();

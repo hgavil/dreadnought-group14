@@ -55,10 +55,12 @@ private int turn;
       // player chooses to attack or do a special move
       // player 1
       if (turn == 0){
-        attack = chooseAttack(p1, t, in);
+        System.out.println("Player 1 please choose a move\n");
+        attack = chooseAttack(p1, in);
       }
       else { // player 2
-        attack = chooseAttack(p2, t, in);
+        System.out.println("Player 2 please choose a move\n");
+        attack = chooseAttack(p2, in);
       }
 
       if(attack == 1){
@@ -112,10 +114,9 @@ private int turn;
     }
   }
 
-  private int chooseAttack(Player p, Terrain t, Scanner in){
+  private int chooseAttack(Player p, Scanner in){
     Boolean safeInput = false;
     int userInput = -1;
-    int x, y;
     System.out.println("Choose 1 for normal attack or 2 for special move\n");
     System.out.println("Choose 1 for now since special move has not been implemented\n");
     do{
@@ -123,12 +124,12 @@ private int turn;
         // read the player's input
         userInput = in.nextInt();
 
-        // if it's something other than 1 or 2, continue
-        if (userInput != 1 && userInput != 2)
-          continue;
+        // if it's something other than 1 or 2, redo
+        if (userInput == 1 || userInput == 2)
+          safeInput = true;
         // safe to continue
-        safeInput = true;
-        
+        else
+          System.out.println("Please choose 1 or 2");
         
       }
       else{
@@ -136,8 +137,9 @@ private int turn;
         in.nextLine();
       }
     } while(!safeInput);
-    // hit nothing
-    return 0;
+
+    // return which attack
+    return userInput;
   }
 
   // val holds 0 for x and 1 for y

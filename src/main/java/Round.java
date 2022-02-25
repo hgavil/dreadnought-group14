@@ -50,6 +50,7 @@ private int turn;
     int x = -1;        // x and y of where we attacked
     int y = -1;
     //player 1/ turn 0 starts 
+    players = new ArrayList<Player>();
 
     players.add(p1);
     players.add(p1);

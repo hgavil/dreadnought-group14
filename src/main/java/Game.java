@@ -140,7 +140,6 @@ public class Game {
     }
 
     public boolean setCoordinates(Scanner in, int axis, Spaceship newShip) {
-        System.out.println("setting coord");
         int userInput = -1;
         // check if player correctly input an int value
         if (in.hasNextInt()) {

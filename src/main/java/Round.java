@@ -39,7 +39,7 @@ private int turn;
 			 playerName = i.getName();
 		 }
 	 }
-   System.out.println("Winner Selected! Player: " + playerName + " is the winner with a score of " + Max);
+   System.out.println("Winner Selected! Player: " + playerName + " is the winner with " + Max + "wins.\n");
 	 return;
  }
 
@@ -53,7 +53,7 @@ private int turn;
     players = new ArrayList<Player>();
 
     players.add(p1);
-    players.add(p1);
+    players.add(p2);
 
     for(Player i : players)
       System.out.println("Welcome player "+i.getName()+"!\n");

@@ -51,6 +51,7 @@ private int turn;
     //player 1/ turn 0 starts 
 
     while (p1.Ships().size() != 0 && p2.Ships().size() != 0){
+      t.getMap().show2D();
 
       // player chooses to attack or do a special move
       // player 1
@@ -75,6 +76,7 @@ private int turn;
           // store what we hit
           hit = t.getMap().getSpace()[x][y].Item();
         }
+        System.out.println("You hit "+hit+" \n");
       }
       else{
         System.out.println("Special move to be implemented\n");

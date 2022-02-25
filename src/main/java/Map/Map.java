@@ -88,7 +88,7 @@ public class Map {
   // | |H|2| | |
   // ...
   // -----------
-  void show2D(){
+  public void show2D(){
     //print "----------"
     for (int i=0; i<10; i++)
       System.out.print("-");

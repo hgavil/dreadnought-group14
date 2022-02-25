@@ -2,79 +2,62 @@ package Ships;
 
 import Map.Square;
 
+
+
 public abstract class Spaceship {
 	private String name;
 	private int numberOfShots;
 	private int x = 0; // ships current x position
 	private int y = 0; // ships current y position
-	private Square[][] position = new Square[x][y];
 	private int health = 0;
-
 	public abstract int getSpecialAttack();
-
+	
 	public void changeHealth(int modifier) {
 		health += modifier;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
-
+	
 	public int getNumShots() {
 		return numberOfShots;
 	}
+	
 
-	public Square[][] getPosition() {
-		return position;
-	}
-
-
+	
+	
 	public void setXPos(int modifier) { // set the x position of the ship
-//		position[x][y].changeOccupied(false); // old position no longer occupied
-//		int x = modifier;
-//		Square[][] nuPos = new Square[x][y];
-//		setPosition(nuPos);
-//		getPosition()[x][y].changeOccupied(true); // new position is occupied, update
+
 		this.x = modifier;
 	}
-
+	
 	public void setYPos(int modifier) { // set the y position of the ship
-//		position[x][y].changeOccupied(false); // old position no longer occupied
-//		int y = modifier;
-//		Square[][] nuPos = new Square[x][y];
-//		setPosition(nuPos);
-//		getPosition()[x][y].changeOccupied(true); // new position is occupied, update
 		this.y = modifier;
-	}
 
-	public void setXYPos(int modX, int modY) {
-		getPosition()[this.x][this.y].changeOccupied(false);
+	}
+	
+	public void setXYPos(int modX,int modY) {
 		this.x = modX;
 		this.y = modY;
-		Square[][] nuPos = new Square[this.x][this.y];
-		setPosition(nuPos);
-		nuPos[this.x][this.y].changeOccupied(true);
-	}
 
+	}
+	
 	public int getXPos() {
 		return x;
 	}
-
+	
 	public int getYPos() {
 		return y;
-	}
-
-	public void setPosition(Square[][] modifier) {
-		position = modifier;
 	}
 
 	public void setName(String modifier) {
 		name = modifier;
 	}
-
+	
 	public void setNumberofShots(int modifier) {
 		numberOfShots = modifier;
+	
 
-
-	}
+}
 }

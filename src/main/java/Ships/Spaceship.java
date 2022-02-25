@@ -10,6 +10,7 @@ public abstract class Spaceship {
 	private int x = 0; // ships current x position
 	private int y = 0; // ships current y position
 	private int health = 0;
+	private int owner = 0;
 	public abstract int getSpecialAttack();
 	
 	public void changeHealth(int modifier) {
@@ -57,7 +58,13 @@ public abstract class Spaceship {
 	
 	public void setNumberofShots(int modifier) {
 		numberOfShots = modifier;
+         }
 	
-
-}
+	public void setOwner(int modifier){
+		this.owner = modifier;
+	}
+	
+	public int getOwner(){
+		return owner;
+	}
 }

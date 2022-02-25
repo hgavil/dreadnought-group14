@@ -111,6 +111,7 @@ public class Game {
                 Square mapSpace = gameMap.getMap().getSpace()[newShip.getXPos()][newShip.getYPos()];
                 if (!mapSpace.Occupied()) {
                     mapSpace.changeOccupied(true);
+                    newShip.setOwner(player.getName());
                     mapSpace.changeItem(player.getName());
                     spaceFree = true;
                 }

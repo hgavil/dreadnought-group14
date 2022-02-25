@@ -24,10 +24,7 @@ public abstract class Spaceship {
 	public int getNumShots() {
 		return numberOfShots;
 	}
-	
-
-	
-	
+		
 	public void setXPos(int modifier) { // set the x position of the ship
 
 		this.x = modifier;

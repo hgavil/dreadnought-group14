@@ -7,9 +7,9 @@ public class Pair<T, Z> {
     T first;
     Z second;
 
-    Pair() {}
+    public Pair() {}
 
-    Pair(T first, Z second) {
+    public Pair(T first, Z second) {
         this.first = first;
         this.second = second;
     }

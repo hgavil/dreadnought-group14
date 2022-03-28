@@ -49,6 +49,7 @@ private int turn;
     int attack = 0; // which type of attack
     int x = -1;        // x and y of where we attacked
     int y = -1;
+
     //player 1/ turn 0 starts 
     players = new ArrayList<Player>();
 

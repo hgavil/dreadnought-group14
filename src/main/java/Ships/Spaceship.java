@@ -2,7 +2,7 @@ package Ships;
 
 import Map.Square;
 
-
+import Map.Map;
 
 public abstract class Spaceship {
 	private String name;
@@ -11,7 +11,7 @@ public abstract class Spaceship {
 	private int y = 0; // ships current y position
 	private int health = 0;
 	private int owner = 0;
-	public abstract int getSpecialAttack();
+	public abstract int getSpecialAttack(Map m);
 	
 	public void changeHealth(int modifier) {
 		health += modifier;

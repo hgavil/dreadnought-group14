@@ -1,10 +1,8 @@
 // the main class
 
-import Map.Terrain;
-
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Scanner;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,14 +23,14 @@ public class Main extends Application {
         Parent welcomePane = welcomeLoader.load();
         Scene welcomeScreen = new Scene(welcomePane, 600, 500);
 
-        FXMLLoader selectShipLoader = new FXMLLoader(Main.class.getResource("selectships.fxml"));
+        FXMLLoader selectShipLoader = new FXMLLoader(Main.class.getResource("selectship.fxml"));
         Parent selectShipsPane = selectShipLoader.load();
-        Scene selectShips = new Scene(selectShipsPane, 600, 500);
+        Scene selectShips = new Scene(selectShipsPane, 1600, 900);
 
         sceneMap.put("welcome", welcomeScreen);
         sceneMap.put("ships", selectShips);
 
-        MainController controller = (MainController) welcomeLoader.getController();
+        StartController controller = (StartController) welcomeLoader.getController();
         controller.setScenes(sceneMap);
 
         // load the first screen

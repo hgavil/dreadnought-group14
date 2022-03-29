@@ -3,14 +3,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
-import java.util.Scanner;
 
 
-public class MainController {
+public class StartController {
     HashMap<String, Scene> sceneMap = new HashMap<String,Scene>();
 
 
@@ -36,6 +34,7 @@ public class MainController {
         // change scene
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.setScene(sceneMap.get("ships"));
+        stage.centerOnScreen();
 
     }
 }

@@ -12,7 +12,7 @@ public class Cruiser extends Spaceship {
 		System.out.println("Cluster bombs away!\n");
 		for(int i = 0; i < 3; i++) { // checking x positions...
 			for(int j = 0; i < 3; j++) { // checking y positions...
-				if(m.getSpace()[getXPos() + i][getYPos() + j].Hit() == false) { // checking for a hit
+				if(m.getSpace()[getXPos() + i][getYPos() + j].Hit() == false && m.getSpace()[getXPos()+i][getYPos()].Item() > 0) { // checking for a hit
 					m.getSpace()[getXPos() + i][getYPos()+ j].changeHit();
 					return 1; 
 				}

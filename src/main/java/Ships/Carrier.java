@@ -11,7 +11,7 @@ public class Carrier extends Spaceship {
 
 		System.out.println("Ion beam is fully charged!\n");
 		for(int i = 1; i <= 5; i++) { // beam targets the next 5 squares in the direction that the ships x position was facing
-		if(m.getSpace()[getXPos()+i][getYPos()].Hit() == false) { // checking for a hit
+		if(m.getSpace()[getXPos()+i][getYPos()].Hit() == false && m.getSpace()[getXPos()+i][getYPos()].Item() > 0) { // checking for a hit
 			m.getSpace()[getXPos()+i][getYPos()].changeHit(); // hit 
 			return 1; // successful attack
 		}

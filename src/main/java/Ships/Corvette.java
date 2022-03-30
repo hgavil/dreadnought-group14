@@ -16,8 +16,10 @@ public class Corvette extends Spaceship {
 			return 0;
 		}
 		m.getSpace()[getXPos()][getYPos()].changeOccupied(false);
+		m.getSpace()[getXPos()][getYPos()].changeItem(0);
 		setXYPos(getXPos()+3,getYPos()+3);
 		m.getSpace()[getXPos()][getYPos()].changeOccupied(true);
+		m.getSpace()[getXPos()][getYPos()].changeItem(getOwner());
 		// move can be completed, so do so.
 		return 1; //successful
 	}

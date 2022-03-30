@@ -1,5 +1,6 @@
 import tools.Pair;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -91,7 +92,24 @@ private int turn;
         System.out.println("You hit "+hit+" \n");
       }
       else{
-        System.out.println("Special move to be implemented\n");
+        System.out.println("Select which ship you'd like to perform a special attack\n");
+        ArrayList<Spaceship> availableShips = players.get(turn-1).Ships();
+        int selection = getUserInput(in);
+        System.out.println("Player: " + turn + " has selected the ship: " + availableShips.get(selection).getName());
+        int result = availableShips.get(selection).getSpecialAttack(t.getMap());
+        if(result == 1) {
+        	System.out.println("Succesful special attack!");
+        	for(int i = 0; i < 10; i++) {
+        		for(int j = 0; j < 10; j++) {
+        			if(t.getMap().getSpace()[i][j].Hit()) {
+        				hit = t.getMap().getSpace()[i][j].Item();
+        			}
+        		}
+        	}            
+        }
+        else {
+        	System.out.println("Unsuccesful special attack!");
+        }
         hit = 0;
       }
 
@@ -192,3 +210,5 @@ private int turn;
     return num;
   }
 }
+
+

@@ -15,7 +15,9 @@ public class Corvette extends Spaceship {
 			System.out.println("Move cannot be completed, distance traveled would exceed board space");
 			return 0;
 		}
+		m.getSpace()[getXPos()][getYPos()].changeOccupied(false);
 		setXYPos(getXPos()+3,getYPos()+3);
+		m.getSpace()[getXPos()][getYPos()].changeOccupied(true);
 		// move can be completed, so do so.
 		return 1; //successful
 	}

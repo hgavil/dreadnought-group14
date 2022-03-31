@@ -15,6 +15,8 @@ public class Game {
     private int gameMode;
     private final int NUMSHIPS = 3;
     private final int BOARDSIZE = 10;
+    private Player p1, p2;
+    private Terrain gameMap;
 
     Game() {
 
@@ -23,6 +25,13 @@ public class Game {
 
     public void matchMaking(User user) {
         throw new Error("Not yet implemented");
+    }
+
+    public Game(Player p1, Player p2, Terrain gameMap) {
+        this.p1 = p1;
+        this.p2 = p2;
+        this.gameMap = gameMap;
+
     }
 
     public void setupGame(Player p1, Player p2, Scanner in, Terrain gameMap) {

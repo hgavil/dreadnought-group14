@@ -59,7 +59,7 @@ public class StartController {
         Parent selectShipsPane = selectShipLoader.load();
         
         HBox hbox = new HBox();
-        hbox.getChildren().addAll(selectShipsPane, Board());
+        hbox.getChildren().addAll(selectShipsPane, createBoard());
         stage.setScene(new Scene(hbox, 1600, 950));
         stage.centerOnScreen();
 
@@ -144,7 +144,7 @@ public class StartController {
         stealthshipbutton.setDisable(true);
     }
 
-    private GridPane Board() {
+    private GridPane createBoard() {
       GridPane board = new GridPane();
       board.setPadding(new Insets(40));
       board.setHgap(10);

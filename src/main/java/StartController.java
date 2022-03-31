@@ -2,12 +2,18 @@ import Map.Terrain;
 import Ships.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 
@@ -33,7 +39,7 @@ public class StartController {
     protected Button carrierbutton, corvettebutton, cruiserbutton, dreadnoughtbutton, stealthshipbutton;
 
     @FXML
-    protected void onStartButton(ActionEvent event) {
+    protected void onStartButton(ActionEvent event) throws IOException {
         // begin the game setup
 
         // create game instance for the game to begin
@@ -48,7 +54,13 @@ public class StartController {
 
         // change scene
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(sceneMap.get("ships"));
+
+        FXMLLoader selectShipLoader = new FXMLLoader(Main.class.getResource("selectvbox.fxml"));
+        Parent selectShipsPane = selectShipLoader.load();
+        
+        HBox hbox = new HBox();
+        hbox.getChildren().addAll(selectShipsPane, Board());
+        stage.setScene(new Scene(hbox, 1600, 950));
         stage.centerOnScreen();
 
     }
@@ -130,6 +142,26 @@ public class StartController {
         cruiserbutton.setDisable(true);
         dreadnoughtbutton.setDisable(true);
         stealthshipbutton.setDisable(true);
+    }
+
+    private GridPane Board() {
+      GridPane board = new GridPane();
+      board.setPadding(new Insets(40));
+      board.setHgap(10);
+      board.setVgap(10);
+
+      int btnDimension = 70;
+      
+      int i,j=0;
+      for (i=0; i<10; i++) {
+        for (j=0; j<10; j++) {
+          Button b = new Button("btn");
+          b.setStyle("-fx-color: lightgray;"+"-fx-min-width: "+btnDimension+";"+"-fx-min-height: "+btnDimension+";");
+          board.add(b, j, i);
+        }
+      }
+
+      return board;
     }
 
 }

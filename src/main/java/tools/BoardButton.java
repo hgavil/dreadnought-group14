@@ -40,11 +40,11 @@ public class BoardButton extends Button{
 	}
 	
 	// get which player clicked this button
-	int player() {
+	public int player() {
 		return p;
 	}
 	
-	void setPlayer(int player) {
+	public void setPlayer(int player) {
 		p = player;
 	}
 	

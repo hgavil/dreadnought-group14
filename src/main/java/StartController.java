@@ -191,7 +191,10 @@ public class StartController {
     private void enableGameGrid() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                buttonGrid[i][j].setDisable(false);
+                if (buttonGrid[i][j].player() > -1)
+                  ; // do nothing
+                else
+                  buttonGrid[i][j].setDisable(false);
             }
         }
     }
@@ -215,6 +218,8 @@ public class StartController {
                         currentPlayer.addShip(selectingShip);
                         // change the map space to be occupied by that player
                         mapSpace.changeItem(currentPlayer.getName());
+                        // add player to button
+                        button.setPlayer(currentPlayer.getName());
 
                         // check if the current player has selected all of their ships
                         if (currentPlayer.Ships().size() < 3) {

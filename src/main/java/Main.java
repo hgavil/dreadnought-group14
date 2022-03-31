@@ -7,7 +7,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import tools.SceneBuilder;
 
 public class Main extends Application {
     HashMap<String, Scene> sceneMap = new HashMap<String,Scene>();
@@ -17,15 +20,23 @@ public class Main extends Application {
         stage.setTitle("Dreadnought");
         stage.setResizable(false);
 
+        SceneBuilder sceneBuilder = new SceneBuilder();
+        GridPane gameGrid = new GridPane();
+
 
         // load scene
         FXMLLoader welcomeLoader = new FXMLLoader(Main.class.getResource("gameStart.fxml"));
         Parent welcomePane = welcomeLoader.load();
         Scene welcomeScreen = new Scene(welcomePane, 600, 500);
 
-        FXMLLoader selectShipLoader = new FXMLLoader(Main.class.getResource("selectship.fxml"));
+        FXMLLoader selectShipLoader = new FXMLLoader(Main.class.getResource("selectvbox.fxml"));
         Parent selectShipsPane = selectShipLoader.load();
-        Scene selectShips = new Scene(selectShipsPane, 1600, 900);
+
+        Scene selectShips = sceneBuilder.selectShipScene(selectShipsPane, gameGrid);
+
+        //VBox testbox = new VBox(selectShipsPane);
+
+        //Scene selectShips = new Scene(testbox, 1600, 950);
 
         sceneMap.put("welcome", welcomeScreen);
         sceneMap.put("ships", selectShips);

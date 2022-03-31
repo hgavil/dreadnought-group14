@@ -58,9 +58,8 @@ public class StartController {
         FXMLLoader selectShipLoader = new FXMLLoader(Main.class.getResource("selectvbox.fxml"));
         Parent selectShipsPane = selectShipLoader.load();
         
-        HBox hbox = new HBox();
-        hbox.getChildren().addAll(selectShipsPane, createBoard());
-        stage.setScene(new Scene(hbox, 1600, 950));
+
+        stage.setScene(sceneMap.get("ships"));
         stage.centerOnScreen();
 
     }
@@ -144,24 +143,6 @@ public class StartController {
         stealthshipbutton.setDisable(true);
     }
 
-    private GridPane createBoard() {
-      GridPane board = new GridPane();
-      board.setPadding(new Insets(40));
-      board.setHgap(10);
-      board.setVgap(10);
 
-      int btnDimension = 70;
-      
-      int i,j=0;
-      for (i=0; i<10; i++) {
-        for (j=0; j<10; j++) {
-          Button b = new Button("btn");
-          b.setStyle("-fx-color: lightgray;"+"-fx-min-width: "+btnDimension+";"+"-fx-min-height: "+btnDimension+";");
-          board.add(b, j, i);
-        }
-      }
-
-      return board;
-    }
 
 }

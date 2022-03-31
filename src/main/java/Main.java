@@ -31,6 +31,7 @@ public class Main extends Application {
 
         FXMLLoader selectShipLoader = new FXMLLoader(Main.class.getResource("selectvbox.fxml"));
         Parent selectShipsPane = selectShipLoader.load();
+        gameGrid = sceneBuilder.createBoard();
 
         Scene selectShips = sceneBuilder.selectShipScene(selectShipsPane, gameGrid);
 

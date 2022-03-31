@@ -19,9 +19,9 @@ public class StartController {
     }
 
     // game variables
-    Game game;
-    Player p1, p2;
-    Terrain gameMap;
+    static Game game;
+    static Player p1, p2;
+    static Terrain gameMap;
 
     @FXML // PLAYERID -- keeps track of which player's turn it is
     protected Text playerid;

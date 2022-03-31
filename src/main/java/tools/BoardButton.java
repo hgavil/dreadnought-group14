@@ -7,6 +7,7 @@ public class BoardButton extends Button{
   String btnWidth = "-fx-min-width: "+ 70 +";";
   String btnHeight = "-fx-min-height: "+ 70 +";";
   Button b;
+  int health;
 	
 	public BoardButton(int i, int j) {
 		b = new Button();
@@ -33,20 +34,13 @@ public class BoardButton extends Button{
 		return col;
 	}
 	
-	Boolean isClicked() {
-		return clicked;
-	}
-	
-	// clicked button and don't need to change it
-	void setClicked(int player) {
-		clicked = true;
-		setPlayer(player);
-	}
-	
-	void unclick() {
-		clicked = false;
-		p = -1;
-	}
+	public int health(){
+    return health;
+  }
+
+  public void gotHit(){
+    health--;
+  }
 	
 	// get which player clicked this button
 	public int player() {
@@ -62,8 +56,13 @@ public class BoardButton extends Button{
     3 orange  - hit but not dead
     2 green   - hit but sprite
     1 black   - hit but nothing here
-    0 darkblue - unkown
+    0         - unkown, base color
   */
+  public void changeTheme(int val){
+    theme = val;
+    setTheme();
+  }
+
 	void setTheme() {
 		if (theme == 4)
       setStyle("-fx-color: red;"+btnWidth+btnHeight);

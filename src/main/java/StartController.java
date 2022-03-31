@@ -81,7 +81,7 @@ public class StartController {
         FXMLLoader selectShipLoader = new FXMLLoader(Main.class.getResource("selectvbox.fxml"));
         Parent selectShipsPane = selectShipLoader.load();
 
-        gameGrid = createBoard();
+        gameGrid = createShipBoard();
         VBox shipSelectorVBox = createShipSelectorVBox(selectShipsPane);
         disableGameGrid();
 
@@ -215,7 +215,7 @@ public class StartController {
     }
 
 
-    private GridPane createBoard() {
+    private GridPane createShipBoard() {
 
         // event handler for gamegrid buttons
         EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
@@ -259,6 +259,7 @@ public class StartController {
 
                                 // change the scene
                                 VBox gameLogVBox = createGameLog();
+                                gameGrid = createGameBoard();
                                 Scene mainGame = sceneBuilder.selectShipScene(gameLogVBox, gameGrid);
                                 sceneMap.put("main", mainGame);
                                 stage.setScene(sceneMap.get("main"));
@@ -292,19 +293,98 @@ public class StartController {
         board.setHgap(10);
         board.setVgap(10);
 
-        int btnDimension = 70;
-
         int i,j=0;
         for (i=0; i<10; i++) {
             for (j=0; j<10; j++) {
                 BoardButton b = new BoardButton(i, j);
                 b.setOnAction(buttonHandler);
                 buttonGrid[i][j] = b;
-                board.add(buttonGrid[i][j], j, i);
+                board.add(b, j, i);
             }
         }
 
         return board;
+    }
+
+    private GridPane createGameBoard() {
+      // event handler for createGameLog buttons
+      EventHandler<ActionEvent> gameButtonHandler = new EventHandler<ActionEvent>() {
+        public void handle(ActionEvent e) {
+          BoardButton button = (BoardButton) e.getSource(); // get the current button
+          int row = button.getRow();
+          int col = button.getCol();
+          Square mapSpace = gameMap.getMap().getSpace()[row][col];
+          BoardButton b = buttonGrid[row][col];
+
+          // current space is not occupied
+          if (!mapSpace.Occupied()) {
+            b.changeTheme(1);
+            b.disable();
+          }
+          // hit but a sprite
+          else if (mapSpace.Item() == -1) {
+            b.changeTheme(2);
+            b.disable();
+          }
+
+          // hit a player
+          // would hit themselves
+          if (mapSpace.Item() == currentPlayer.getName())
+            gameLog.insertText(1, "You are here, please select a different spot");
+          // player 1 shot
+          else if (currentPlayer.getName() == 1) {
+            // cheack other player ships to match with coordinates
+            for (int i=0; i<p2.Ships().size(); i++){
+              if (p2.Ships().get(i).getXPos() == row && p2.Ships().get(i).getYPos() == col){
+                // remove one health
+                p2.Ships().get(i).changeHealth(-1);
+                // if health == 0, remove
+                if (p2.Ships().get(i).getHealth() == 0){
+                  p2.Ships().remove(i);
+                  b.changeTheme(4);
+                  b.disable();
+                }
+                b.changeTheme(3); // hit but not dead
+              }
+            }
+          }
+          // player 2 shot
+          else {
+            // cheack other player ships to match with coordinates
+            for (int i=0; i<p1.Ships().size(); i++){
+              if (p1.Ships().get(i).getXPos() == row && p1.Ships().get(i).getYPos() == col){
+                // remove one health
+                p1.Ships().get(i).changeHealth(-1);
+                // if health == 0, remove
+                if (p1.Ships().get(i).getHealth() == 0){
+                  p1.Ships().remove(i);
+                  b.changeTheme(4);
+                  b.disable();
+                }
+                b.changeTheme(3); // hit but not dead
+              }
+            }
+          }
+          // end of hit player
+        }
+      };
+      
+      GridPane board = new GridPane();
+      board.setPadding(new Insets(40));
+      board.setHgap(10);
+      board.setVgap(10);
+
+      int i,j=0;
+      for (i=0; i<10; i++) {
+        for (j=0; j<10; j++) {
+          BoardButton b = new BoardButton(i, j);
+          b.setOnAction(gameButtonHandler);
+          buttonGrid[i][j] = b;
+          board.add(b, j, i);
+        }
+      }
+      
+      return board;
     }
 
     private VBox createShipSelectorVBox(Parent shipsPane) {

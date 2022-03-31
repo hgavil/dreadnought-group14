@@ -16,6 +16,10 @@ public abstract class Spaceship {
 	public void changeHealth(int modifier) {
 		health += modifier;
 	}
+
+  public int getHealth(){
+    return health;
+  }
 	
 	public String getName() {
 		return name;

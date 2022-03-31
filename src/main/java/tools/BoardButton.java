@@ -4,19 +4,28 @@ import javafx.scene.control.Button;
 public class BoardButton extends Button{
 	private int row, col, p, theme;
 	private Boolean clicked = false;
-  int btnDimension = 70;
+  String btnWidth = "-fx-min-width: "+ 70 +";";
+  String btnHeight = "-fx-min-height: "+ 70 +";";
+  Button b;
 	
 	public BoardButton(int i, int j) {
-		Button b = new Button();
-		setStyle("-fx-color: lightgray;"+"-fx-pref-width: "+btnDimension+";"+"-fx-pref-height: "+btnDimension+";");
+		b = new Button();
 		row = i;
 		col = j;
 		p = -1; // -1 until it is clicked
 		theme = 0;
-		
+		setTheme();
 	}
-	
-	public int getRow() {
+
+  public void disable(){
+    setDisable(true);
+  }
+
+  public void enable(){
+    setDisable(false);
+  }
+
+  public int getRow() {
 		return row;
 	}
 	
@@ -55,16 +64,16 @@ public class BoardButton extends Button{
     1 black   - hit but nothing here
     0 darkblue - unkown
   */
-	void setColor(int num) {
+	void setTheme() {
 		if (theme == 4)
-      setStyle("-fx-color: red;"+"-fx-pref-width: "+btnDimension+";"+"-fx-pref-height: "+btnDimension+";");
-    else if (num == 3)
-      setStyle("-fx-color: orange;"+"-fx-pref-width: "+btnDimension+";"+"-fx-pref-height: "+btnDimension+";");
-    else if (num == 2)
-      setStyle("-fx-color: green;"+"-fx-pref-width: "+btnDimension+";"+"-fx-pref-height: "+btnDimension+";");
-    else if (num == 1)
-      setStyle("-fx-color: black;"+"-fx-pref-width: "+btnDimension+";"+"-fx-pref-height: "+btnDimension+";");
+      setStyle("-fx-color: red;"+btnWidth+btnHeight);
+    else if (theme == 3)
+      setStyle("-fx-color: orange;"+btnWidth+btnHeight);
+    else if (theme == 2)
+      setStyle("-fx-color: green;"+btnWidth+btnHeight);
+    else if (theme == 1)
+      setStyle("-fx-color: black;"+btnWidth+btnHeight);
     else
-      setStyle("-fx-color: #00008b;"+"-fx-pref-width: "+btnDimension+";"+"-fx-pref-height: "+btnDimension+";");
+      setStyle("-fx-color: lightgray;"+btnWidth+btnHeight);
 	}
 }

@@ -33,7 +33,7 @@ public class StartController {
     static Game game;
     static Player p1, p2;
     static Terrain gameMap;
-    static Button[][] buttonGrid;
+    static BoardButton[][] buttonGrid;
     enum ModeSettings {SETUP, INGAME};
     static ModeSettings currentMode;
     static Player currentPlayer;
@@ -113,7 +113,7 @@ public class StartController {
         selectingShip = ship;
         directions.setText("Current Ship: Carrier");
 
-        enableGameGrid();
+        enableSetupGameGrid();
     }
 
     @FXML
@@ -129,7 +129,7 @@ public class StartController {
         selectingShip = ship;
         directions.setText("Current Ship: Corvette");
 
-        enableGameGrid();
+        enableSetupGameGrid();
     }
 
     @FXML
@@ -145,7 +145,7 @@ public class StartController {
         selectingShip = ship;
         directions.setText("Current Ship: Cruiser");
 
-        enableGameGrid();
+        enableSetupGameGrid();
 
     }
 
@@ -162,7 +162,7 @@ public class StartController {
         selectingShip = ship;
         directions.setText("Current Ship: Dreadnought");
 
-        enableGameGrid();
+        enableSetupGameGrid();
 
     }
 
@@ -179,7 +179,7 @@ public class StartController {
         selectingShip = ship;
         directions.setText("Current Ship: Stealthship");
 
-        enableGameGrid();
+        enableSetupGameGrid();
 
     }
 
@@ -188,20 +188,30 @@ public class StartController {
     private void disableGameGrid() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                buttonGrid[i][j].setDisable(true);
+                buttonGrid[i][j].disable();
+            }
+        }
+    }
+
+    private void enableSetupGameGrid() {
+      Square mapSpace;
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+              mapSpace = gameMap.getMap().getSpace()[buttonGrid[i][j].getRow()][buttonGrid[i][j].getCol()];
+              if (mapSpace.Occupied())
+                ; // keep disabled buttons disabled
+              else
+                buttonGrid[i][j].enable();
             }
         }
     }
 
     private void enableGameGrid() {
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                if (buttonGrid[i][j].player() > -1)
-                  ; // do nothing
-                else
-                  buttonGrid[i][j].setDisable(false);
-            }
+      for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            buttonGrid[i][j].enable();
         }
+      }
     }
 
 
@@ -223,8 +233,8 @@ public class StartController {
                         currentPlayer.addShip(selectingShip);
                         // change the map space to be occupied by that player
                         mapSpace.changeItem(currentPlayer.getName());
-                        // add player to button
-                        button.setPlayer(currentPlayer.getName());
+                        // is now occupied
+                        mapSpace.changeOccupied(true);
 
                         // check if the current player has selected all of their ships
                         if (currentPlayer.Ships().size() < 3) {
@@ -243,6 +253,9 @@ public class StartController {
                             }
                             else {
                                 // if it was player 2, start the game
+                                
+                                // enable all buttons
+                                enableGameGrid();
 
                                 // change the scene
                                 VBox gameLogVBox = createGameLog();
@@ -284,11 +297,10 @@ public class StartController {
         int i,j=0;
         for (i=0; i<10; i++) {
             for (j=0; j<10; j++) {
-                Button b = new BoardButton(i, j);
+                BoardButton b = new BoardButton(i, j);
                 b.setOnAction(buttonHandler);
                 buttonGrid[i][j] = b;
-                b.setStyle("-fx-color: lightgray;"+"-fx-min-width: "+btnDimension+";"+"-fx-min-height: "+btnDimension+";");
-                board.add(b, j, i);
+                board.add(buttonGrid[i][j], j, i);
             }
         }
 

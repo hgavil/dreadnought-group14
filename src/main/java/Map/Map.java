@@ -62,7 +62,8 @@ public class Map {
     // generate 100 random sprites
     int rNum1, rNum2;
     i = 0;
-    while (i < 10){
+    int percentage = SIZE*SIZE/5; // 20% of board
+    while (i < percentage){
       // nextInt is normally exclusive of the top value,
       // so add 1 to make it inclusive
       // ThreadLocalRandom.current().nextInt(min, max + 1)

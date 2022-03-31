@@ -59,7 +59,7 @@ public class SceneBuilder {
             for (j=0; j<10; j++) {
                 BoardButton b = new BoardButton(i,j);
                 b.setOnAction(e->{ 
-                  System.out.println("row:"+b.getRow()+", col:"+b.getCol())
+                  System.out.println("row:"+b.getRow()+", col:"+b.getCol());
                 });
                 board.add(b, j, i);
             }

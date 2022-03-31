@@ -13,8 +13,8 @@ public abstract class Spaceship {
 	private int owner = 0;
 	public abstract int getSpecialAttack(Map m);
 	
-	public void changeHealth(int modifier) {
-		health += modifier;
+	public void changeHealth() {
+		health += 1;
 	}
 
   public int getHealth(){

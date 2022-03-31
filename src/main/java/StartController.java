@@ -340,8 +340,8 @@ public class StartController {
             for (int i=0; i<p2.Ships().size(); i++){
               if (p2.Ships().get(i).getXPos() == row && p2.Ships().get(i).getYPos() == col){
                 // remove one health
+                p2.Ships().get(i).changeHealth();
                 System.out.println("Health of ship is now:"+p2.Ships().get(i).getHealth());
-                p1.Ships().get(i).changeHealth(-1);
 
                 // if health == 0, remove
                 if (p2.Ships().get(i).getHealth() == 0){
@@ -349,7 +349,8 @@ public class StartController {
                   b.changeTheme(4);
                   b.disable();
                 }
-                b.changeTheme(3); // hit but not dead
+                else
+                  b.changeTheme(3); // hit but not dead
               }
             }
           }
@@ -359,8 +360,8 @@ public class StartController {
             for (int i=0; i<p1.Ships().size(); i++){
               if (p1.Ships().get(i).getXPos() == row && p1.Ships().get(i).getYPos() == col){
                 // remove one health
+                p1.Ships().get(i).changeHealth();
                 System.out.println("Health of ship is now:"+p1.Ships().get(i).getHealth());
-                p1.Ships().get(i).changeHealth(-1);
 
                 // if health == 0, remove
                 if (p1.Ships().get(i).getHealth() == 0){
@@ -368,21 +369,29 @@ public class StartController {
                   b.changeTheme(4);
                   b.disable();
                 }
-                b.changeTheme(3); // hit but not dead
+                else
+                  b.changeTheme(3); // hit but not dead
               }
             }
           }
           // end of hit player
+          // check if either player lost
+          // player 1 lost
+          if (p1.Ships().size() == 0)
+            java.lang.System.exit(0);
+          // player 2 lost
+          else if (p2.Ships().size() == 0)
+            java.lang.System.exit(0);
 
-          // // keep same person
-          // if (hitThemselves)
-          //   return;
+          // keep same person
+          if (hitThemselves)
+            return;
           
-          // // alternate players everytime they dont try to hit themselves
-          // if (currentPlayer.getName() == 1)
-          //   currentPlayer = p2;
-          // else
-          //   currentPlayer = p1;
+          // alternate players everytime they dont try to hit themselves
+          if (currentPlayer.getName() == 1)
+            currentPlayer = p2;
+          else
+            currentPlayer = p1;
         }
       };
       

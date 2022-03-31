@@ -21,9 +21,19 @@ public class Cruiser extends Spaceship {
 		return 0;
 	}
 
+
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
+    public int getHealth(){
+      return health;
+    }
 
+    @Override
+    public void changeHealth() {
+      health--;
+    }
 }

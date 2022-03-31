@@ -24,5 +24,18 @@ public class Corvette extends Spaceship {
 		return 1; //successful
 	}
 
+  @Override
+  public String getName() {
+      return name;
+  }
 
+  @Override
+  public int getHealth(){
+    return health;
+  }
+
+  @Override
+  public void changeHealth() {
+    health--;
+  }
 }

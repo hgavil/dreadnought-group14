@@ -11,9 +11,20 @@ public class Stealthship extends Spaceship {
 		return 1; // cannot fail, always return 1
 	}
 	
-    public String getName() {
-        return name;
-    }
+  @Override
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public int getHealth(){
+    return health;
+  }
+
+  @Override
+  public void changeHealth() {
+    health--;
+  }
 
 
 }

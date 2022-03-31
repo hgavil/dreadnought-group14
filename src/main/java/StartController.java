@@ -391,11 +391,11 @@ public class StartController {
           // alternate players everytime they dont try to hit themselves
           if (currentPlayer.getName() == 1){
             currentPlayer = p2;
-            currentTurnText.setText("CURRENT TURN: Player 2 ");
+            playerid.setText("2");
           }
           else{
             currentPlayer = p1;
-            currentTurnText.setText("CURRENT TURN: Player 1 ");
+            playerid.setText("1");
           }
         }
       };

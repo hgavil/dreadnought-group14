@@ -46,26 +46,26 @@ public class SceneBuilder {
         return scene;
 
     }
-    public GridPane createBoard() {
-        GridPane board = new GridPane();
-        board.setPadding(new Insets(40));
-        board.setHgap(10);
-        board.setVgap(10);
-
-        int btnDimension = 70;
-
-        int i,j=0;
-        for (i=0; i<10; i++) {
-            for (j=0; j<10; j++) {
-                BoardButton b = new BoardButton(i,j);
-                b.setOnAction(e->{ 
-                  System.out.println("row:"+b.getRow()+", col:"+b.getCol());
-                });
-                board.add(b, j, i);
-            }
-        }
-
-        return board;
-    }
+//    public GridPane createBoard() {
+//        GridPane board = new GridPane();
+//        board.setPadding(new Insets(40));
+//        board.setHgap(10);
+//        board.setVgap(10);
+//
+//        int btnDimension = 70;
+//
+//        int i,j=0;
+//        for (i=0; i<10; i++) {
+//            for (j=0; j<10; j++) {
+//                BoardButton b = new BoardButton(i,j);
+//                b.setOnAction(e->{
+//                  System.out.println("row:"+b.getRow()+", col:"+b.getCol());
+//                });
+//                board.add(b, j, i);
+//            }
+//        }
+//
+//        return board;
+//    }
 
 }

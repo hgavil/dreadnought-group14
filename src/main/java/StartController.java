@@ -18,7 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import tools.GameButton;
+import tools.BoardButton;
 import tools.SceneBuilder;
 
 import java.io.IOException;
@@ -48,7 +48,7 @@ public class StartController {
     public void setTools(HashMap<String, Scene> sceneMap, SceneBuilder sceneBuilder) {
         this.sceneMap = sceneMap;
         this.sceneBuilder = sceneBuilder;
-        buttonGrid = new GameButton[10][10];
+        buttonGrid = new BoardButton[10][10];
     }
 
     static Spaceship selectingShip;
@@ -202,15 +202,15 @@ public class StartController {
         // event handler for gamegrid buttons
         EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                GameButton button = (GameButton) e.getSource(); // get the current button
-                Square mapSpace = gameMap.getMap().getSpace()[button.x][button.y];
+                BoardButton button = (BoardButton) e.getSource(); // get the current button
+                Square mapSpace = gameMap.getMap().getSpace()[button.getRow()][button.getCol()];
 
                 // HANDLING DURING SETUP:
                 if (currentMode == ModeSettings.SETUP) {
                     // if the space isn't occupied,
                     if (!mapSpace.Occupied()) {
                         // set the ship's coordinates to this location
-                        selectingShip.setXYPos(button.x, button.y);
+                        selectingShip.setXYPos(button.getRow(), button.getCol());
                         // give the player the ship
                         currentPlayer.addShip(selectingShip);
                         // change the map space to be occupied by that player
@@ -267,7 +267,7 @@ public class StartController {
         int i,j=0;
         for (i=0; i<10; i++) {
             for (j=0; j<10; j++) {
-                Button b = new GameButton(i, j);
+                Button b = new BoardButton(i, j);
                 b.setOnAction(buttonHandler);
                 buttonGrid[i][j] = b;
                 b.setStyle("-fx-color: lightgray;"+"-fx-min-width: "+btnDimension+";"+"-fx-min-height: "+btnDimension+";");

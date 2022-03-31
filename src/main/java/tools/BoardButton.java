@@ -16,11 +16,11 @@ public class BoardButton extends Button{
 		
 	}
 	
-	int getRow() {
+	public int getRow() {
 		return row;
 	}
 	
-	int getCol() {
+	public int getCol() {
 		return col;
 	}
 	

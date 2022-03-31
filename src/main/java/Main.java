@@ -21,7 +21,6 @@ public class Main extends Application {
         stage.setResizable(false);
 
         SceneBuilder sceneBuilder = new SceneBuilder();
-        GridPane gameGrid = new GridPane();
 
 
         // load scene
@@ -29,21 +28,15 @@ public class Main extends Application {
         Parent welcomePane = welcomeLoader.load();
         Scene welcomeScreen = new Scene(welcomePane, 600, 500);
 
-        FXMLLoader selectShipLoader = new FXMLLoader(Main.class.getResource("selectvbox.fxml"));
-        Parent selectShipsPane = selectShipLoader.load();
-        gameGrid = sceneBuilder.createBoard();
-
-        Scene selectShips = sceneBuilder.selectShipScene(selectShipsPane, gameGrid);
-
-        //VBox testbox = new VBox(selectShipsPane);
-
-        //Scene selectShips = new Scene(testbox, 1600, 950);
+//        FXMLLoader selectShipLoader = new FXMLLoader(Main.class.getResource("selectvbox.fxml"));
+//        Parent selectShipsPane = selectShipLoader.load();
+//        Scene selectShips = sceneBuilder.selectShipScene(selectShipsPane);
 
         sceneMap.put("welcome", welcomeScreen);
-        sceneMap.put("ships", selectShips);
+//        sceneMap.put("ships", selectShips);
 
         StartController controller = (StartController) welcomeLoader.getController();
-        controller.setScenes(sceneMap);
+        controller.setTools(sceneMap, sceneBuilder);
 
         // load the first screen
         stage.setScene(welcomeScreen);

@@ -10,11 +10,6 @@
 <VBox alignment="CENTER" prefHeight="819.0" prefWidth="491.0" spacing="50.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
    fx:controller="StartController">
    <children>
-      <Text fx:id="directions" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="SELECT YOUR SHIPS" textAlignment="CENTER" wrappingWidth="242.05999755859375">
-         <font>
-            <Font name="Barlow Condensed SemiBold" size="35.0" />
-         </font>
-      </Text>
       <VBox>
          <VBox.margin>
             <Insets bottom="5.0" />
@@ -192,23 +187,6 @@
                </font>
             </Button>
          </children>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CURRENTLY SELECTING: Player ">
-               <font>
-                  <Font name="Barlow Condensed Regular" size="15.0" />
-               </font>
-            </Text>
-            <Text fx:id="playerid" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
-               <font>
-                  <Font name="Barlow Condensed Regular" size="15.0" />
-               </font>
-            </Text>
-         </children>
-         <VBox.margin>
-            <Insets top="50.0" />
-         </VBox.margin>
       </HBox>
    </children>
 </VBox>

@@ -18,8 +18,6 @@ public class SceneBuilder {
     Text title;
     HBox centerContents;
 
-
-
     public Scene selectShipScene(Parent leftPane, GridPane gameGrid) {
         // dreadnought title
         title = new Text("DREADNOUGHT");
@@ -36,7 +34,6 @@ public class SceneBuilder {
 
         // center contents
         centerContents = new HBox(leftPane, gameGrid);
-        centerContents.setAlignment(Pos.CENTER);
 
         // borderpane
         gameWindow = new BorderPane();
@@ -44,7 +41,6 @@ public class SceneBuilder {
         gameWindow.setCenter(centerContents);
 
         Scene scene = new Scene(gameWindow, 1600, 900);
-
         return scene;
 
     }

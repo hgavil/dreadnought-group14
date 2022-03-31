@@ -1,39 +1,58 @@
+import Map.Square;
 import Map.Terrain;
 import Ships.*;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import tools.GameButton;
+import tools.SceneBuilder;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Scanner;
 
 
 public class StartController {
-
-    HashMap<String, Scene> sceneMap = new HashMap<String,Scene>();
-    public void setScenes(HashMap<String, Scene> sceneMap) {
-        this.sceneMap = sceneMap;
-    }
 
     // game variables
     static Game game;
     static Player p1, p2;
     static Terrain gameMap;
+    static Button[][] buttonGrid;
+    enum ModeSettings {SETUP, INGAME};
+    static ModeSettings currentMode;
+    static Player currentPlayer;
+    static Round match;
+    static String directionsText;
 
-    @FXML // PLAYERID -- keeps track of which player's turn it is
-    protected Text playerid;
+    static HashMap<String, Scene> sceneMap = new HashMap<String,Scene>();
+    static SceneBuilder sceneBuilder;
 
-    @FXML // DIRECTIONS -- tells the player what to do
-    protected Text directions;
+    static Text directions;
+    static Text playerid;
+
+    public void setTools(HashMap<String, Scene> sceneMap, SceneBuilder sceneBuilder) {
+        this.sceneMap = sceneMap;
+        this.sceneBuilder = sceneBuilder;
+        buttonGrid = new GameButton[10][10];
+    }
+
+    static Spaceship selectingShip;
+
 
     @FXML // SHIP SELECTION BUTTONS -- used during ship selection process
     protected Button carrierbutton, corvettebutton, cruiserbutton, dreadnoughtbutton, stealthshipbutton;
@@ -57,11 +76,19 @@ public class StartController {
 
         FXMLLoader selectShipLoader = new FXMLLoader(Main.class.getResource("selectvbox.fxml"));
         Parent selectShipsPane = selectShipLoader.load();
-        
+        GridPane gameGrid = createBoard();
+        VBox shipSelectorVBox = createShipSelectorVBox(selectShipsPane);
+
+        disableGameGrid();
+
+        Scene selectShips = sceneBuilder.selectShipScene(shipSelectorVBox, gameGrid);
+        sceneMap.put("ships", selectShips);
 
         stage.setScene(sceneMap.get("ships"));
         stage.centerOnScreen();
 
+        currentMode = ModeSettings.SETUP;
+        currentPlayer = p1;
     }
 
     // SHIP SELECTION //
@@ -73,14 +100,15 @@ public class StartController {
         Spaceship ship = new Carrier();
         ship.setName("Carrier");
 
-        System.out.println(playerid.getText());
-
         // assign the ship to the correct player
-        if (playerid.getText() == "1") {
+        if (currentPlayer == p1) {
             ship.setOwner(this.p1.getName());
         } else ship.setOwner(this.p2.getName());
 
-        disableShipButtons();
+        selectingShip = ship;
+        directions.setText("Current Ship: Carrier");
+
+        enableGameGrid();
     }
 
     @FXML
@@ -89,11 +117,14 @@ public class StartController {
         ship.setName("Corvette");
 
         // assign the ship to the correct player
-        if (playerid.getText() == "1") {
+        if (currentPlayer == p1) {
             ship.setOwner(p1.getName());
         } else ship.setOwner(p2.getName());
 
-        disableShipButtons();
+        selectingShip = ship;
+        directions.setText("Current Ship: Corvette");
+
+        enableGameGrid();
     }
 
     @FXML
@@ -102,11 +133,15 @@ public class StartController {
         ship.setName("Cruiser");
 
         // assign the ship to the correct player
-        if (playerid.getText() == "1") {
+        if (currentPlayer == p1) {
             ship.setOwner(p1.getName());
         } else ship.setOwner(p2.getName());
 
-        disableShipButtons();
+        selectingShip = ship;
+        directions.setText("Current Ship: Cruiser");
+
+        enableGameGrid();
+
     }
 
     @FXML
@@ -115,11 +150,15 @@ public class StartController {
         ship.setName("Dreadnought");
 
         // assign the ship to the correct player
-        if (playerid.getText() == "1") {
+        if (currentPlayer == p1) {
             ship.setOwner(p1.getName());
         } else ship.setOwner(p2.getName());
 
-        disableShipButtons();
+        selectingShip = ship;
+        directions.setText("Current Ship: Dreadnought");
+
+        enableGameGrid();
+
     }
 
     @FXML
@@ -128,19 +167,143 @@ public class StartController {
         ship.setName("Stealthship");
 
         // assign the ship to the correct player
-        if (playerid.getText() == "1") {
+        if (currentPlayer == p1) {
             ship.setOwner(p1.getName());
         } else ship.setOwner(p2.getName());
 
-        disableShipButtons();
+        selectingShip = ship;
+        directions.setText("Current Ship: Stealthship");
+
+        enableGameGrid();
+
     }
 
-    private void disableShipButtons() {
-        carrierbutton.setDisable(true);
-        corvettebutton.setDisable(true);
-        cruiserbutton.setDisable(true);
-        dreadnoughtbutton.setDisable(true);
-        stealthshipbutton.setDisable(true);
+
+
+    private void disableGameGrid() {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                buttonGrid[i][j].setDisable(true);
+            }
+        }
+    }
+
+    private void enableGameGrid() {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                buttonGrid[i][j].setDisable(false);
+            }
+        }
+    }
+
+
+    private GridPane createBoard() {
+
+        // event handler for gamegrid buttons
+        EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                GameButton button = (GameButton) e.getSource(); // get the current button
+                Square mapSpace = gameMap.getMap().getSpace()[button.x][button.y];
+
+                // HANDLING DURING SETUP:
+                if (currentMode == ModeSettings.SETUP) {
+                    // if the space isn't occupied,
+                    if (!mapSpace.Occupied()) {
+                        // set the ship's coordinates to this location
+                        selectingShip.setXYPos(button.x, button.y);
+                        // give the player the ship
+                        currentPlayer.addShip(selectingShip);
+                        // change the map space to be occupied by that player
+                        mapSpace.changeItem(currentPlayer.getName());
+
+                        // check if the current player has selected all of their ships
+                        if (currentPlayer.Ships().size() < 3) {
+                            // if they haven't, disable the game grid and let them choose another ship
+                            disableGameGrid();
+                            directions.setText("Ship placed.");
+                        }
+                        else {
+                            // if they have, first check if it was player 1 or player 2
+                            if (currentPlayer == p1) {
+                                // if it's player 1, move on to player 2
+                                currentPlayer = p2;
+                                directions.setText("Player 2, pick your ships!");
+
+                                disableGameGrid();
+                            }
+                            else {
+                                // if it was player 2, start the game
+
+                                // change the scene
+
+                                // call a new round
+                                /*temporary*/Scanner in = new Scanner(System.in);
+                                /*temporary*/match = new Round(p1, p2, gameMap, in);
+                                /*uncomment when round is reworked*/ //match = new Round(p1, p2, gameMap);
+                                match.getWinner();
+                            }
+                        }
+                    }
+                    else {
+                        directions.setText("Space occupied! Try again.");
+                    }
+                }
+
+                // HANDLING DURING INGAME:
+                else if (currentMode == ModeSettings.INGAME) {
+
+                }
+
+            }
+        };
+
+        GridPane board = new GridPane();
+        board.setPadding(new Insets(40));
+        board.setHgap(10);
+        board.setVgap(10);
+
+        int btnDimension = 70;
+
+        int i,j=0;
+        for (i=0; i<10; i++) {
+            for (j=0; j<10; j++) {
+                Button b = new GameButton(i, j);
+                b.setOnAction(buttonHandler);
+                buttonGrid[i][j] = b;
+                b.setStyle("-fx-color: lightgray;"+"-fx-min-width: "+btnDimension+";"+"-fx-min-height: "+btnDimension+";");
+                board.add(b, j, i);
+            }
+        }
+
+        return board;
+    }
+
+    private VBox createShipSelectorVBox(Parent shipsPane) {
+        directions = new Text("SELECT YOUR SHIPS");
+        directions.setTextAlignment(TextAlignment.CENTER);
+        directions.setWrappingWidth(242.05999755859375);
+
+        directions.setFont(Font.font("Barlow Condensed SemiBold", 35));
+
+        Text currentlySelectingText = new Text("CURRENTLY SELECTING: Player ");
+        currentlySelectingText.setFont(Font.font("Barlow Condensed Regular", 15));
+
+        playerid = new Text("1");
+        playerid.setFont(Font.font("Barlow Condensed Regular", 15));
+
+        HBox playerText = new HBox(currentlySelectingText, playerid);
+        playerText.setAlignment(Pos.CENTER);
+        playerText.setPrefHeight(36.0);
+        playerText.setPrefWidth(600.0);
+
+        VBox shipSelectorVBox = new VBox(directions, shipsPane, playerid);
+        VBox.setMargin(directions, new Insets(50,0,5,0));
+        VBox.setMargin(playerid, new Insets(50,0,0,0));
+        shipSelectorVBox.setAlignment(Pos.CENTER);
+        shipSelectorVBox.setSpacing(50.0);
+        shipSelectorVBox.setPrefHeight(819.0);
+        shipSelectorVBox.setPrefWidth(491.0);
+        return shipSelectorVBox;
     }
 
 

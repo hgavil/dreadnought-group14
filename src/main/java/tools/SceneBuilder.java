@@ -1,5 +1,7 @@
 package tools;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -19,6 +21,8 @@ public class SceneBuilder {
     HBox titleBar;
     Text title;
     HBox centerContents;
+    GridPane gameGrid;
+    Button[][] buttonGrid = new Button[10][10];
 
     public Scene selectShipScene(Parent leftPane, GridPane gameGrid) {
         // dreadnought title
@@ -36,6 +40,7 @@ public class SceneBuilder {
 
         // center contents
         centerContents = new HBox(leftPane, gameGrid);
+        centerContents.setSpacing(100);
 
         // borderpane
         gameWindow = new BorderPane();
@@ -45,25 +50,6 @@ public class SceneBuilder {
         Scene scene = new Scene(gameWindow, 1600, 900);
         return scene;
 
-    }
-    public GridPane createBoard() {
-        GridPane board = new GridPane();
-        board.setPadding(new Insets(40));
-        board.setHgap(10);
-        board.setVgap(10);
-
-        int btnDimension = 70;
-
-        int i,j=0;
-        for (i=0; i<10; i++) {
-            for (j=0; j<10; j++) {
-                Button b = new Button("btn");
-                b.setStyle("-fx-color: lightgray;"+"-fx-min-width: "+btnDimension+";"+"-fx-min-height: "+btnDimension+";");
-                board.add(b, j, i);
-            }
-        }
-
-        return board;
     }
 
 }

@@ -315,6 +315,7 @@ public class StartController {
           int col = button.getCol();
           Square mapSpace = gameMap.getMap().getSpace()[row][col];
           BoardButton b = buttonGrid[row][col];
+          boolean hitThemselves = false;
 
           // current space is not occupied
           if (!mapSpace.Occupied()) {
@@ -329,15 +330,19 @@ public class StartController {
 
           // hit a player
           // would hit themselves
-          if (mapSpace.Item() == currentPlayer.getName())
+          if (mapSpace.Item() == currentPlayer.getName()){
             gameLog.insertText(1, "You are here, please select a different spot");
+            hitThemselves = true;
+          }
           // player 1 shot
           else if (currentPlayer.getName() == 1) {
             // cheack other player ships to match with coordinates
             for (int i=0; i<p2.Ships().size(); i++){
               if (p2.Ships().get(i).getXPos() == row && p2.Ships().get(i).getYPos() == col){
                 // remove one health
-                p2.Ships().get(i).changeHealth(-1);
+                System.out.println("Health of ship is now:"+p2.Ships().get(i).getHealth());
+                p1.Ships().get(i).changeHealth(-1);
+
                 // if health == 0, remove
                 if (p2.Ships().get(i).getHealth() == 0){
                   p2.Ships().remove(i);
@@ -354,7 +359,9 @@ public class StartController {
             for (int i=0; i<p1.Ships().size(); i++){
               if (p1.Ships().get(i).getXPos() == row && p1.Ships().get(i).getYPos() == col){
                 // remove one health
+                System.out.println("Health of ship is now:"+p1.Ships().get(i).getHealth());
                 p1.Ships().get(i).changeHealth(-1);
+
                 // if health == 0, remove
                 if (p1.Ships().get(i).getHealth() == 0){
                   p1.Ships().remove(i);
@@ -366,6 +373,16 @@ public class StartController {
             }
           }
           // end of hit player
+
+          // // keep same person
+          // if (hitThemselves)
+          //   return;
+          
+          // // alternate players everytime they dont try to hit themselves
+          // if (currentPlayer.getName() == 1)
+          //   currentPlayer = p2;
+          // else
+          //   currentPlayer = p1;
         }
       };
       

@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -37,13 +38,16 @@ public class StartController {
     static ModeSettings currentMode;
     static Player currentPlayer;
     static Round match;
-    static String directionsText;
+    static GridPane gameGrid;
+    static Stage stage;
 
     static HashMap<String, Scene> sceneMap = new HashMap<String,Scene>();
     static SceneBuilder sceneBuilder;
 
     static Text directions;
     static Text playerid;
+
+    static TextArea gameLog;
 
     public void setTools(HashMap<String, Scene> sceneMap, SceneBuilder sceneBuilder) {
         this.sceneMap = sceneMap;
@@ -72,17 +76,18 @@ public class StartController {
         this.gameMap = new Terrain();
 
         // change scene
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
 
         FXMLLoader selectShipLoader = new FXMLLoader(Main.class.getResource("selectvbox.fxml"));
         Parent selectShipsPane = selectShipLoader.load();
-        GridPane gameGrid = createBoard();
-        VBox shipSelectorVBox = createShipSelectorVBox(selectShipsPane);
 
+        gameGrid = createBoard();
+        VBox shipSelectorVBox = createShipSelectorVBox(selectShipsPane);
         disableGameGrid();
 
         Scene selectShips = sceneBuilder.selectShipScene(shipSelectorVBox, gameGrid);
         sceneMap.put("ships", selectShips);
+
 
         stage.setScene(sceneMap.get("ships"));
         stage.centerOnScreen();
@@ -240,12 +245,19 @@ public class StartController {
                                 // if it was player 2, start the game
 
                                 // change the scene
+                                VBox gameLogVBox = createGameLog();
+                                Scene mainGame = sceneBuilder.selectShipScene(gameLogVBox, gameGrid);
+                                sceneMap.put("main", mainGame);
+                                stage.setScene(sceneMap.get("main"));
 
-                                // call a new round
-                                /*temporary*/Scanner in = new Scanner(System.in);
-                                /*temporary*/match = new Round(p1, p2, gameMap, in);
-                                /*uncomment when round is reworked*/ //match = new Round(p1, p2, gameMap);
-                                match.getWinner();
+                                currentMode = ModeSettings.INGAME;
+                                currentPlayer = p1;
+
+//                                // call a new round
+//                                /*temporary*/Scanner in = new Scanner(System.in);
+//                                /*temporary*/match = new Round(p1, p2, gameMap, in);
+//                                /*uncomment when round is reworked*/ //match = new Round(p1, p2, gameMap);
+//                                match.getWinner();
                             }
                         }
                     }
@@ -311,6 +323,32 @@ public class StartController {
         return shipSelectorVBox;
     }
 
+    private VBox createGameLog() {
+        Text title = new Text("GAME LOG");
+        title.setTextAlignment(TextAlignment.CENTER);
+        title.setFont(Font.font("Barlow Condensed SemiBold", 35.0));
+
+        gameLog = new TextArea();
+        gameLog.setPrefHeight(644.0);
+        gameLog.setPrefWidth(491.0);
+        gameLog.insertText(0, "Game start! Player 1 goes first!");
+        gameLog.setDisable(true);
+
+        HBox bottomText;
+        Text currentTurnText = new Text("CURRENT TURN: Player ");
+        title.setFont(Font.font("Barlow Condensed SemiBold", 15));
+        playerid = new Text("1");
+        playerid.setFont(Font.font("Barlow Condensed Regular", 15));
+        bottomText = new HBox(currentTurnText, playerid);
+        bottomText.setAlignment(Pos.CENTER);
+
+        VBox gameLogVBox = new VBox(title, gameLog, bottomText);
+        VBox.setMargin(title, new Insets(0,0,5,0));
+        gameLogVBox.setAlignment(Pos.CENTER);
+        gameLogVBox.setSpacing(5.0);
+
+        return gameLogVBox;
+    }
 
 
 }

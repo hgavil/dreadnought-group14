@@ -48,6 +48,7 @@ public class StartController {
     static Text playerid;
 
     static TextArea gameLog;
+    static Text currentTurnText;
 
     public void setTools(HashMap<String, Scene> sceneMap, SceneBuilder sceneBuilder) {
         this.sceneMap = sceneMap;
@@ -331,7 +332,7 @@ public class StartController {
           // hit a player
           // would hit themselves
           if (mapSpace.Item() == currentPlayer.getName()){
-            gameLog.insertText(1, "You are here, please select a different spot");
+            gameLog.appendText("\nYou are here, please select a different spot");
             hitThemselves = true;
           }
           // player 1 shot
@@ -341,7 +342,7 @@ public class StartController {
               if (p2.Ships().get(i).getXPos() == row && p2.Ships().get(i).getYPos() == col){
                 // remove one health
                 p2.Ships().get(i).changeHealth();
-                System.out.println("Health of ship is now:"+p2.Ships().get(i).getHealth());
+                // System.out.println("Health of ship is now:"+p2.Ships().get(i).getHealth());
 
                 // if health == 0, remove
                 if (p2.Ships().get(i).getHealth() == 0){
@@ -361,7 +362,7 @@ public class StartController {
               if (p1.Ships().get(i).getXPos() == row && p1.Ships().get(i).getYPos() == col){
                 // remove one health
                 p1.Ships().get(i).changeHealth();
-                System.out.println("Health of ship is now:"+p1.Ships().get(i).getHealth());
+                // System.out.println("Health of ship is now:"+p1.Ships().get(i).getHealth());
 
                 // if health == 0, remove
                 if (p1.Ships().get(i).getHealth() == 0){
@@ -388,10 +389,14 @@ public class StartController {
             return;
           
           // alternate players everytime they dont try to hit themselves
-          if (currentPlayer.getName() == 1)
+          if (currentPlayer.getName() == 1){
             currentPlayer = p2;
-          else
+            currentTurnText.setText("CURRENT TURN: Player 2 ");
+          }
+          else{
             currentPlayer = p1;
+            currentTurnText.setText("CURRENT TURN: Player 1 ");
+          }
         }
       };
       
@@ -453,7 +458,7 @@ public class StartController {
         gameLog.setDisable(true);
 
         HBox bottomText;
-        Text currentTurnText = new Text("CURRENT TURN: Player ");
+        currentTurnText = new Text("CURRENT TURN: Player ");
         title.setFont(Font.font("Barlow Condensed SemiBold", 15));
         playerid = new Text("1");
         playerid.setFont(Font.font("Barlow Condensed Regular", 15));

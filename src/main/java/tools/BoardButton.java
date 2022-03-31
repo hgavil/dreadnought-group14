@@ -53,10 +53,10 @@ public class BoardButton extends Button{
     3 orange  - hit but not dead
     2 green   - hit but sprite
     1 black   - hit but nothing here
-    0 lightgray - unkown
+    0 darkblue - unkown
   */
 	void setColor(int num) {
-		if (num == 4)
+		if (theme == 4)
       setStyle("-fx-color: red;"+"-fx-pref-width: "+btnDimension+";"+"-fx-pref-height: "+btnDimension+";");
     else if (num == 3)
       setStyle("-fx-color: orange;"+"-fx-pref-width: "+btnDimension+";"+"-fx-pref-height: "+btnDimension+";");
@@ -65,6 +65,6 @@ public class BoardButton extends Button{
     else if (num == 1)
       setStyle("-fx-color: black;"+"-fx-pref-width: "+btnDimension+";"+"-fx-pref-height: "+btnDimension+";");
     else
-      setStyle("-fx-color: lightgray;"+"-fx-pref-width: "+btnDimension+";"+"-fx-pref-height: "+btnDimension+";");
+      setStyle("-fx-color: #00008b;"+"-fx-pref-width: "+btnDimension+";"+"-fx-pref-height: "+btnDimension+";");
 	}
 }

@@ -57,8 +57,10 @@ public class SceneBuilder {
         int i,j=0;
         for (i=0; i<10; i++) {
             for (j=0; j<10; j++) {
-                Button b = new Button("btn");
-                b.setStyle("-fx-color: lightgray;"+"-fx-min-width: "+btnDimension+";"+"-fx-min-height: "+btnDimension+";");
+                BoardButton b = new BoardButton(i,j);
+                b.setOnAction(e->{ 
+                  System.out.println("row:"+b.getRow()+", col:"+b.getCol())
+                });
                 board.add(b, j, i);
             }
         }

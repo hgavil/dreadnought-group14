@@ -31,8 +31,8 @@ import java.util.Scanner;
 
 public class StartController {
 
-    public int count = 0;
-    public int winner = 1;
+    static int count = 0;
+    static int winner = 1;
 
     // game variables
     static Game game;

@@ -18,6 +18,36 @@ public class BoardButton extends Button{
 		setTheme();
 	}
 
+  /*
+    1       - corvette
+    2       - cruiser
+    3       - dreadnought
+    4       - stealthship
+    default - carrier
+  */
+  public BoardButton(int ship){
+    b = new Button();
+    switch (ship){
+      case 1: 
+        setText("Corvette");
+        break;
+      case 2:
+        setText("Cruiser");
+        break;
+      case 3:
+        setText("Dreadnought");
+        break;
+      case 4:
+        setText("Stealthship");
+        break;
+      default:
+        setText("Carrier");
+        break;
+    };
+		theme = 5;
+		setTheme();
+  }
+
   public void disable(){
     setDisable(true);
   }

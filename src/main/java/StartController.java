@@ -304,6 +304,8 @@ public class StartController {
             }
         }
 
+
+
         return board;
     }
 
@@ -314,76 +316,10 @@ public class StartController {
           BoardButton button = (BoardButton) e.getSource(); // get the current button
           int row = button.getRow();
           int col = button.getCol();
-          Square mapSpace = gameMap.getMap().getSpace()[row][col];
           BoardButton b = buttonGrid[row][col];
           boolean hitThemselves = false;
 
-          // current space is not occupied
-          if (!mapSpace.Occupied()) {
-            b.changeTheme(1);
-            b.disable();
-          }
-          // hit but a sprite
-          else if (mapSpace.Item() == -1) {
-            b.changeTheme(2);
-            b.disable();
-          }
-
-          // hit a player
-          // would hit themselves
-          if (mapSpace.Item() == currentPlayer.getName()){
-            gameLog.appendText("\nYou are here, please select a different spot");
-            hitThemselves = true;
-          }
-          // player 1 shot
-          else if (currentPlayer.getName() == 1) {
-            // cheack other player ships to match with coordinates
-            for (int i=0; i<p2.Ships().size(); i++){
-              if (p2.Ships().get(i).getXPos() == row && p2.Ships().get(i).getYPos() == col){
-                // remove one health
-                p2.Ships().get(i).changeHealth();
-                // System.out.println("Health of ship is now:"+p2.Ships().get(i).getHealth());
-
-                // if health == 0, remove
-                if (p2.Ships().get(i).getHealth() == 0){
-                  p2.Ships().remove(i);
-                  b.changeTheme(4);
-                  b.disable();
-                }
-                else
-                  b.changeTheme(3); // hit but not dead
-              }
-            }
-          }
-          // player 2 shot
-          else {
-            // cheack other player ships to match with coordinates
-            for (int i=0; i<p1.Ships().size(); i++){
-              if (p1.Ships().get(i).getXPos() == row && p1.Ships().get(i).getYPos() == col){
-                // remove one health
-                p1.Ships().get(i).changeHealth();
-                // System.out.println("Health of ship is now:"+p1.Ships().get(i).getHealth());
-
-                // if health == 0, remove
-                if (p1.Ships().get(i).getHealth() == 0){
-                  p1.Ships().remove(i);
-                  b.changeTheme(4);
-                  b.disable();
-                }
-                else
-                  b.changeTheme(3); // hit but not dead
-              }
-            }
-          }
-          // end of hit player
-          // check if either player lost
-          // player 1 lost
-          if (p1.Ships().size() == 0)
-            java.lang.System.exit(0);
-          // player 2 lost
-          else if (p2.Ships().size() == 0)
-            java.lang.System.exit(0);
-
+          hitThemselves = attackPosition(row, col, b);
           // keep same person
           if (hitThemselves)
             return;
@@ -414,8 +350,130 @@ public class StartController {
           board.add(b, j, i);
         }
       }
+
       
       return board;
+    } // end of createGameBoard
+
+    private boolean attackPosition(int row, int col, BoardButton b){
+      Square mapSpace = gameMap.getMap().getSpace()[row][col];
+      boolean hitThemselves = false;
+      
+      // current space is not occupied
+      if (!mapSpace.Occupied()) {
+        b.changeTheme(1);
+        b.disable();
+      }
+      // hit but a sprite
+      else if (mapSpace.Item() == -1) {
+        b.changeTheme(2);
+        b.disable();
+      }
+
+      // hit a player
+      // would hit themselves
+      else if (mapSpace.Item() == currentPlayer.getName()){
+        gameLog.appendText("\nYou are here, please select a different spot");
+        hitThemselves = true;
+      }
+      // player 1 shot
+      else if (currentPlayer.getName() == 1) {
+        // cheack other player ships to match with coordinates
+        for (int i=0; i<p2.Ships().size(); i++){
+          if (p2.Ships().get(i).getXPos() == row && p2.Ships().get(i).getYPos() == col){
+            // remove one health
+            p2.Ships().get(i).changeHealth();
+            // System.out.println("Health of ship is now:"+p2.Ships().get(i).getHealth());
+
+            // if health == 0, remove
+            if (p2.Ships().get(i).getHealth() == 0){
+              p2.Ships().remove(i);
+              b.changeTheme(4);
+              b.disable();
+            }
+            else
+              b.changeTheme(3); // hit but not dead
+          }
+        }
+      }
+      // player 2 shot
+      else {
+        // cheack other player ships to match with coordinates
+        for (int i=0; i<p1.Ships().size(); i++){
+          if (p1.Ships().get(i).getXPos() == row && p1.Ships().get(i).getYPos() == col){
+            // remove one health
+            p1.Ships().get(i).changeHealth();
+            // System.out.println("Health of ship is now:"+p1.Ships().get(i).getHealth());
+
+            // if health == 0, remove
+            if (p1.Ships().get(i).getHealth() == 0){
+              p1.Ships().remove(i);
+              b.changeTheme(4);
+              b.disable();
+            }
+            else
+              b.changeTheme(3); // hit but not dead
+          }
+        }
+      }
+      // end of hit player
+
+      
+      // check if either player lost
+      // player 1 lost
+      if (p1.Ships().size() == 0)
+        java.lang.System.exit(0);
+      // player 2 lost
+      else if (p2.Ships().size() == 0)
+        java.lang.System.exit(0);
+
+      return hitThemselves;
+    }
+
+    private GridPane playerShips(){
+      GridPane ships = new GridPane();
+      String name;
+      BoardButton s;
+      int i;
+      for (i=0; i<p1.Ships().size(); i++){
+        name = p1.Ships().get(i).getName();
+        if ("Ships.Carrier".equals(name))
+          s = new BoardButton(0);
+        else if ("Ships.Corvette".equals(name))
+          s = new BoardButton(1);
+        else if ("Ships.Cruiser".equals(name))
+          s = new BoardButton(2);
+        else if ("Ships.Dreadnought".equals(name))
+          s = new BoardButton(3);
+        else if ("Ships.Stealthship".equals(name))
+          s = new BoardButton(4);
+        else{
+          s = new BoardButton(0);
+          System.out.println("Something went wrong with ship buttons");
+        }
+
+        ships.add(s, 10, i);
+      }
+      for (i=0; i<p2.Ships().size(); i++){
+        name = p2.Ships().get(i).getName();
+        if ("Ships.Carrier".equals(name))
+          s = new BoardButton(0);
+        else if ("Ships.Corvette".equals(name))
+          s = new BoardButton(1);
+        else if ("Ships.Cruiser".equals(name))
+          s = new BoardButton(2);
+        else if ("Ships.Dreadnought".equals(name))
+          s = new BoardButton(3);
+        else if ("Ships.Stealthship".equals(name))
+          s = new BoardButton(4);
+        else{
+          s = new BoardButton(0);
+          System.out.println("Something went wrong with ship buttons");
+        }
+
+        ships.add(s, 10, i+p1.Ships().size());
+      }
+      return ships;
     }
 
     private VBox createShipSelectorVBox(Parent shipsPane) {

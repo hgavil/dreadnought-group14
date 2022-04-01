@@ -102,7 +102,9 @@ public class BoardButton extends Button{
       setStyle("-fx-color: green;"+btnWidth+btnHeight);
     else if (theme == 1)
       setStyle("-fx-color: black;"+btnWidth+btnHeight);
-    else
+    else if (theme == 0)
       setStyle("-fx-color: lightgray;"+btnWidth+btnHeight);
+    else
+    setStyle("-fx-color: lightgray; -fx-min-width: 100; -fx-min-height: 50");
 	}
 }

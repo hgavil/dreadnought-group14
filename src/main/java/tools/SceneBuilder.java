@@ -20,7 +20,7 @@ public class SceneBuilder {
     Text title;
     HBox centerContents;
 
-    public Scene selectShipScene(Parent leftPane, GridPane gameGrid) {
+    public Scene selectShipScene(Parent leftPane, GridPane gameGrid, GridPane playerButtons) {
         // dreadnought title
         title = new Text("DREADNOUGHT");
         title.setFont(Font.font("Barlow Condensed SemiBold", 50));
@@ -35,7 +35,7 @@ public class SceneBuilder {
 
 
         // center contents
-        centerContents = new HBox(leftPane, gameGrid);
+        centerContents = new HBox(leftPane, gameGrid, playerButtons);
 
         // borderpane
         gameWindow = new BorderPane();

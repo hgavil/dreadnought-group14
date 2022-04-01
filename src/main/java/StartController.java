@@ -11,9 +11,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -40,6 +42,8 @@ public class StartController {
     static Round match;
     static GridPane gameGrid;
     static Stage stage;
+    static GridPane playerOneShips;
+    static GridPane playerTwoShips;
 
     static HashMap<String, Scene> sceneMap = new HashMap<String,Scene>();
     static SceneBuilder sceneBuilder;
@@ -86,7 +90,7 @@ public class StartController {
         VBox shipSelectorVBox = createShipSelectorVBox(selectShipsPane);
         disableGameGrid();
 
-        Scene selectShips = sceneBuilder.selectShipScene(shipSelectorVBox, gameGrid);
+        Scene selectShips = sceneBuilder.selectShipScene(shipSelectorVBox, gameGrid, new GridPane());
         sceneMap.put("ships", selectShips);
 
 
@@ -259,9 +263,11 @@ public class StartController {
                                 enableGameGrid();
 
                                 // change the scene
-                                VBox gameLogVBox = createGameLog();
                                 gameGrid = createGameBoard();
-                                Scene mainGame = sceneBuilder.selectShipScene(gameLogVBox, gameGrid);
+                                GridPane playerShips = createPlayerShips();
+                                VBox gameLogVBox = createGameLog();
+                                stage.setScene(sceneMap.get("one"));
+                                Scene mainGame = sceneBuilder.selectShipScene(gameLogVBox, gameGrid, playerShips);
                                 sceneMap.put("main", mainGame);
                                 stage.setScene(sceneMap.get("main"));
 
@@ -328,10 +334,12 @@ public class StartController {
           if (currentPlayer.getName() == 1){
             currentPlayer = p2;
             playerid.setText("2");
+            stage.setScene(sceneMap.get("ships"));
           }
           else{
             currentPlayer = p1;
             playerid.setText("1");
+            stage.setScene(sceneMap.get("main"));
           }
         }
       };
@@ -430,11 +438,21 @@ public class StartController {
       return hitThemselves;
     }
 
-    private GridPane playerShips(){
+    // gridpane of player 1 ships in terms of buttons
+    private GridPane createPlayerShips(){
       GridPane ships = new GridPane();
       String name;
       BoardButton s;
       int i;
+      ships.setPadding(new Insets(40));
+      ships.setHgap(10);
+      ships.setVgap(10);
+      Pane pane = new Pane();
+      pane.setStyle("-fx-min-height: 70;");
+      Label lp1 = new Label("Player 1 Ships");
+      Label lp2 = new Label("Player 2 Ships");
+
+      ships.add(lp1, 0, 0);
       for (i=0; i<p1.Ships().size(); i++){
         name = p1.Ships().get(i).getName();
         if ("Ships.Carrier".equals(name))
@@ -452,8 +470,10 @@ public class StartController {
           System.out.println("Something went wrong with ship buttons");
         }
 
-        ships.add(s, 10, i);
+        ships.add(s, 0, i+1);
       }
+      ships.add(pane, 0, p1.Ships().size()+1);
+      ships.add(lp2, 0, p1.Ships().size()+2);
       for (i=0; i<p2.Ships().size(); i++){
         name = p2.Ships().get(i).getName();
         if ("Ships.Carrier".equals(name))
@@ -470,8 +490,7 @@ public class StartController {
           s = new BoardButton(0);
           System.out.println("Something went wrong with ship buttons");
         }
-
-        ships.add(s, 10, i+p1.Ships().size());
+        ships.add(s, 0, i+p1.Ships().size()+3);
       }
       return ships;
     }

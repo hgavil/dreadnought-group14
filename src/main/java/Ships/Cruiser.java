@@ -14,6 +14,7 @@ public class Cruiser extends Spaceship {
 			for(int j = 0; i < 3; j++) { // checking y positions...
 				if(m.getSpace()[getXPos() + i][getYPos() + j].Hit() == false && m.getSpace()[getXPos()+i][getYPos()].Item() > 0) { // checking for a hit
 					m.getSpace()[getXPos() + i][getYPos()+ j].changeHit();
+					setspecialUsed();
 					return 1; 
 				}
 			}

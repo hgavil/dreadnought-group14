@@ -8,6 +8,7 @@ public class Stealthship extends Spaceship {
 	public int getSpecialAttack(Map m) {
 		System.out.println("Reserve ammunition deployed!\n");
 		numberOfShots += 4;
+		setspecialUsed();
 		return 1; // cannot fail, always return 1
 	}
 	

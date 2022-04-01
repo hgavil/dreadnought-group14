@@ -337,8 +337,9 @@ public class StartController {
             playerid.setText("2");
             // keep buttons that are used disabled
             for (int i=0; i<specialAttackButtons[1].length; i++){
-              if (!specialAttackButtons[1][i].isClicked())
-              specialAttackButtons[1][i].enable();
+              if (!specialAttackButtons[1][i].Clicked())
+                specialAttackButtons[1][i].enable();
+              specialAttackButtons[0][i].disable();
             }
           }
           else{
@@ -346,8 +347,9 @@ public class StartController {
             playerid.setText("1");
             // keep buttons that are used disabled
             for (int i=0; i<specialAttackButtons[0].length; i++){
-              if (!specialAttackButtons[0][i].isClicked())
+              if (!specialAttackButtons[0][i].Clicked())
                 specialAttackButtons[0][i].enable();
+              specialAttackButtons[1][i].disable();
             }
           }
         }
@@ -499,8 +501,8 @@ public class StartController {
           s = new BoardButton(0);
           System.out.println("Something went wrong with ship buttons");
         }
-        s.disable();
         specialAttackButtons[1][i] = s;
+        specialAttackButtons[1][i].disable();
         ships.add(s, 0, i+p1.Ships().size()+3);
       }
       return ships;

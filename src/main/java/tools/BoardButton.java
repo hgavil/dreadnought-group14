@@ -3,7 +3,7 @@ import javafx.scene.control.Button;
 
 public class BoardButton extends Button{
 	private int row, col, p, theme;
-	private Boolean clicked = false;
+	private Boolean clicked;
   String btnWidth = "-fx-min-width: "+ 70 +";";
   String btnHeight = "-fx-min-height: "+ 70 +";";
   Button b;
@@ -16,6 +16,7 @@ public class BoardButton extends Button{
 		p = -1; // -1 until it is clicked
 		theme = 0;
 		setTheme();
+    clicked = false;
 	}
 
   /*
@@ -46,6 +47,7 @@ public class BoardButton extends Button{
     };
 		theme = 5;
 		setTheme();
+    clicked = false;
   }
 
   public void disable(){
@@ -108,12 +110,9 @@ public class BoardButton extends Button{
     setStyle("-fx-color: lightgray; -fx-min-width: 100; -fx-min-height: 50");
 	}
 
-  public Boolean isClicked() {
+  // 
+  public Boolean Clicked() {
 		return clicked;
-	}
-	
-	public void clicked() {
-		clicked = true;
 	}
 	
 	public void unclick() {

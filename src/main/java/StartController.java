@@ -36,6 +36,7 @@ public class StartController {
     static Player p1, p2;
     static Terrain gameMap;
     static BoardButton[][] buttonGrid;
+    static BoardButton[][] specialAttackButtons = new BoardButton[2][3]; // [players][ships/player]
     enum ModeSettings {SETUP, INGAME};
     static ModeSettings currentMode;
     static Player currentPlayer;
@@ -334,12 +335,20 @@ public class StartController {
           if (currentPlayer.getName() == 1){
             currentPlayer = p2;
             playerid.setText("2");
-            stage.setScene(sceneMap.get("ships"));
+            // keep buttons that are used disabled
+            for (int i=0; i<specialAttackButtons[1].length; i++){
+              if (!specialAttackButtons[1][i].isClicked())
+              specialAttackButtons[1][i].enable();
+            }
           }
           else{
             currentPlayer = p1;
             playerid.setText("1");
-            stage.setScene(sceneMap.get("main"));
+            // keep buttons that are used disabled
+            for (int i=0; i<specialAttackButtons[0].length; i++){
+              if (!specialAttackButtons[0][i].isClicked())
+                specialAttackButtons[0][i].enable();
+            }
           }
         }
       };
@@ -469,7 +478,7 @@ public class StartController {
           s = new BoardButton(0);
           System.out.println("Something went wrong with ship buttons");
         }
-
+        specialAttackButtons[0][i] = s;
         ships.add(s, 0, i+1);
       }
       ships.add(pane, 0, p1.Ships().size()+1);
@@ -490,6 +499,8 @@ public class StartController {
           s = new BoardButton(0);
           System.out.println("Something went wrong with ship buttons");
         }
+        s.disable();
+        specialAttackButtons[1][i] = s;
         ships.add(s, 0, i+p1.Ships().size()+3);
       }
       return ships;

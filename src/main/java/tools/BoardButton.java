@@ -107,4 +107,16 @@ public class BoardButton extends Button{
     else
     setStyle("-fx-color: lightgray; -fx-min-width: 100; -fx-min-height: 50");
 	}
+
+  public Boolean isClicked() {
+		return clicked;
+	}
+	
+	public void clicked() {
+		clicked = true;
+	}
+	
+	public void unclick() {
+		clicked = false;
+	}
 }

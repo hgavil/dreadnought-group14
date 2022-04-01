@@ -11,6 +11,7 @@ public abstract class Spaceship {
 	private int y = 0; // ships current y position
 	private int health = 0;
 	private int owner = 0;
+	private boolean specialUsed = false;
 	public abstract int getSpecialAttack(Map m);
 	
 	public void changeHealth() {
@@ -44,6 +45,9 @@ public abstract class Spaceship {
 		this.y = modY;
 
 	}
+	public void setspecialUsed() {
+		this.specialUsed = true;
+	}
 	
 	public int getXPos() {
 		return x;
@@ -67,5 +71,9 @@ public abstract class Spaceship {
 	
 	public int getOwner(){
 		return owner;
+	}
+	
+	public boolean getspecialUsed() {
+		return specialUsed;
 	}
 }

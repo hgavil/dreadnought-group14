@@ -21,6 +21,7 @@ public class Corvette extends Spaceship {
 		m.getSpace()[getXPos()][getYPos()].changeOccupied(true);
 		m.getSpace()[getXPos()][getYPos()].changeItem(getOwner());
 		// move can be completed, so do so.
+		setspecialUsed();
 		return 1; //successful
 	}
 

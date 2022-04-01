@@ -10,10 +10,15 @@ public class Cruiser extends Spaceship {
 
 	public int getSpecialAttack(Map m) {
 		System.out.println("Cluster bombs away!\n");
-		for(int i = 0; i < 3; i++) { // checking x positions...
-			for(int j = 0; i < 3; j++) { // checking y positions...
+		for(int i = 1; i < 3; i++) { // checking x positions...
+			for(int j = 1; i < 3; j++) { // checking y positions...
+				if(getXPos()+i > 10 || getYPos()+j > 10) {
+					System.out.println("Attack out of bounds, unsuccessful.. special attack refunded.");
+					return 0;
+				}
 				if(m.getSpace()[getXPos() + i][getYPos() + j].Hit() == false && m.getSpace()[getXPos()+i][getYPos()].Item() > 0) { // checking for a hit
 					m.getSpace()[getXPos() + i][getYPos()+ j].changeHit();
+					setspecialUsed();
 					return 1; 
 				}
 			}

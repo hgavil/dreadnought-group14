@@ -549,6 +549,127 @@ public class StartController {
 
         return gameLogVBox;
     }
+    
 
+    	EventHandler<ActionEvent> dreadnoughtHandler = new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent e) {
+				for(int i = 0; i < currentPlayer.Ships().size(); i++) {
+					if(currentPlayer.Ships().get(i).getName() == "Dreadnought") {
+						if(currentPlayer.Ships().get(i).getHealth() > 4) {
+							System.out.println("Special attack already used for this Dreadnought!");
+						}
+						else {
+							currentPlayer.Ships().get(i).getSpecialAttack(gameMap.getMap());
+						}
+					}
+				}
+
+			}
+    		
+    	};
+    	EventHandler<ActionEvent> cruiserHandler = new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent e) {
+				for(int i = 0; i < currentPlayer.Ships().size(); i++) {
+					if(currentPlayer.Ships().get(i).getName() == "Cruiser") {
+						if(currentPlayer.Ships().get(i).getspecialUsed() == true) {
+							System.out.println("Special attack already used for this Cruiser!");
+						}
+						else {
+							int result = currentPlayer.Ships().get(i).getSpecialAttack(gameMap.getMap());
+							if(result == 1) {
+					        	System.out.println("Succesful special attack!");
+					        	for(int f = 0; i < 10; i++) {
+					        		for(int j = 0; j < 10; j++) {
+					        			if(gameMap.getMap().getSpace()[f][j].Hit()) {
+					        				BoardButton b = buttonGrid[f][j];
+					        				attackPosition(f,j,b);
+					        			}
+					        		}
+					        	}            
+					        }
+					        else {
+					        	System.out.println("Unsuccesful special attack!");
+					        }
+					      }
+							
+						}
+					}
+				}
+			
+    		
+    	};
+    	EventHandler<ActionEvent> corvettetHandler = new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent e) {
+				for(int i = 0; i < currentPlayer.Ships().size(); i++) {
+					if(currentPlayer.Ships().get(i).getName() == "Corvette") {
+						if(currentPlayer.Ships().get(i).getspecialUsed() == true) {
+							System.out.println("special attack already used for this Corvette!");
+						}
+						else {
+							currentPlayer.Ships().get(i).getSpecialAttack(gameMap.getMap());
+						}
+					}
+				}
+			}
+    		
+    	};
+    	EventHandler<ActionEvent> stealthshipHandler = new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				for(int i = 0; i < currentPlayer.Ships().size(); i++) {
+					if(currentPlayer.Ships().get(i).getName() == "Stealthship") {
+						if(currentPlayer.Ships().get(i).getspecialUsed() == true) {
+							System.out.println("special attack already used for this Stealthship!");
+						}
+						else {
+							currentPlayer.Ships().get(i).getSpecialAttack(gameMap.getMap());
+						}
+					}
+				}
+			}
+    		
+    	};
+    	EventHandler<ActionEvent> carrierHandler = new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				for(int i = 0; i < currentPlayer.Ships().size(); i++) {
+					if(currentPlayer.Ships().get(i).getName() == "Carrier") {
+						if(currentPlayer.Ships().get(i).getspecialUsed() == true) {
+							System.out.println("special attack already used for this Carrier!");
+						}
+						else {
+							int result = currentPlayer.Ships().get(i).getSpecialAttack(gameMap.getMap());
+							if(result == 1) {
+					        	System.out.println("Succesful special attack!");
+					        	for(int f = 0; i < 10; i++) {
+					        		for(int j = 0; j < 10; j++) {
+					        			if(gameMap.getMap().getSpace()[f][j].Hit()) {
+					        				BoardButton b = buttonGrid[f][j];
+					        				attackPosition(f,j,b);
+					        			}
+					        		}
+					        	}            
+					        }
+					        else {
+					        	System.out.println("Unsuccesful special attack!");
+					        }
+						}
+					}
+				}
+				
+			}
+    		
+    	};
+    	
+    	
+    
 
 }

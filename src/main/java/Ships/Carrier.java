@@ -17,6 +17,7 @@ public class Carrier extends Spaceship {
           }
           if(m.getSpace()[getXPos()+i][getYPos()].Hit() == false && m.getSpace()[getXPos()+i][getYPos()].Item() > 0) { // checking for a hit
             m.getSpace()[getXPos()+i][getYPos()].changeHit(); // hit 
+    		setspecialUsed();
             return 1; // successful attack
           }
         }	

@@ -537,8 +537,8 @@ public class StartController {
 			@Override
 			public void handle(ActionEvent e) {
 				for(int i = 0; i < currentPlayer.Ships().size(); i++) {
-					if(currentPlayer.Ships().get(i).getName() == "Dreadnought") {
-						if(currentPlayer.Ships().get(i).getHealth() > 4) {
+					if(currentPlayer.Ships().get(i).getName() == "Ships.Dreadnought") {
+						if(currentPlayer.Ships().get(i).getspecialUsed() == true) {
 							System.out.println("Special attack already used for this Dreadnought!");
 						}
 						else {
@@ -555,7 +555,7 @@ public class StartController {
 			@Override
 			public void handle(ActionEvent e) {
 				for(int i = 0; i < currentPlayer.Ships().size(); i++) {
-					if(currentPlayer.Ships().get(i).getName() == "Cruiser") {
+					if(currentPlayer.Ships().get(i).getName() == "Ships.Cruiser") {
 						if(currentPlayer.Ships().get(i).getspecialUsed() == true) {
 							System.out.println("Special attack already used for this Cruiser!");
 						}
@@ -588,7 +588,7 @@ public class StartController {
 			@Override
 			public void handle(ActionEvent e) {
 				for(int i = 0; i < currentPlayer.Ships().size(); i++) {
-					if(currentPlayer.Ships().get(i).getName() == "Corvette") {
+					if(currentPlayer.Ships().get(i).getName() == "Ships.Corvette") {
 						if(currentPlayer.Ships().get(i).getspecialUsed() == true) {
 							System.out.println("special attack already used for this Corvette!");
 						}
@@ -605,7 +605,7 @@ public class StartController {
 			@Override
 			public void handle(ActionEvent arg0) {
 				for(int i = 0; i < currentPlayer.Ships().size(); i++) {
-					if(currentPlayer.Ships().get(i).getName() == "Stealthship") {
+					if(currentPlayer.Ships().get(i).getName() == "Ships.Stealthship") {
 						if(currentPlayer.Ships().get(i).getspecialUsed() == true) {
 							System.out.println("special attack already used for this Stealthship!");
 						}
@@ -622,7 +622,7 @@ public class StartController {
 			@Override
 			public void handle(ActionEvent arg0) {
 				for(int i = 0; i < currentPlayer.Ships().size(); i++) {
-					if(currentPlayer.Ships().get(i).getName() == "Carrier") {
+					if(currentPlayer.Ships().get(i).getName() == "Ships.Carrier") {
 						if(currentPlayer.Ships().get(i).getspecialUsed() == true) {
 							System.out.println("special attack already used for this Carrier!");
 						}

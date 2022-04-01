@@ -602,7 +602,7 @@ public class StartController {
 			
     		
     	};
-    	EventHandler<ActionEvent> corvettetHandler = new EventHandler<ActionEvent>() {
+    	EventHandler<ActionEvent> corvetteHandler = new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent e) {

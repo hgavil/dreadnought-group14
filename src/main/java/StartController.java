@@ -31,6 +31,9 @@ import java.util.Scanner;
 
 public class StartController {
 
+    public int count = 0;
+    public int winner = 1;
+
     // game variables
     static Game game;
     static Player p1, p2;
@@ -45,6 +48,10 @@ public class StartController {
     static Stage stage;
     static GridPane playerOneShips;
     static GridPane playerTwoShips;
+
+    public Button exitButton;
+    public Text gameEndText = new Text();
+    public boolean isGameEnd = false;
 
     static HashMap<String, Scene> sceneMap = new HashMap<String,Scene>();
     static SceneBuilder sceneBuilder;
@@ -94,12 +101,26 @@ public class StartController {
         Scene selectShips = sceneBuilder.selectShipScene(shipSelectorVBox, gameGrid, new GridPane());
         sceneMap.put("ships", selectShips);
 
+        FXMLLoader endScreenLoader = new FXMLLoader(Main.class.getResource("endScreen.fxml"));
+        Parent endScreenParent = endScreenLoader.load();
+        Scene endScene = new Scene(endScreenParent);
+        sceneMap.put("end", endScene);
+
 
         stage.setScene(sceneMap.get("ships"));
         stage.centerOnScreen();
 
         currentMode = ModeSettings.SETUP;
         currentPlayer = p1;
+    }
+
+    private void showEndScreen() throws IOException {
+
+//        FXMLLoader endScreenLoader = new FXMLLoader(Main.class.getResource("endScreen.fxml"));
+//        Parent endScreenParent = endScreenLoader.load();
+//        Scene endScene = new Scene(endScreenParent);
+        stage.setScene(sceneMap.get("end"));
+        stage.centerOnScreen();
     }
 
     // SHIP SELECTION //
@@ -437,15 +458,32 @@ public class StartController {
       }
       // end of hit player
 
-      
-      // check if either player lost
-      // player 1 lost
-      if (p1.Ships().size() == 0)
-        java.lang.System.exit(0);
-      // player 2 lost
-      else if (p2.Ships().size() == 0)
-        java.lang.System.exit(0);
+        // check if either player lost
+        // player 1 lost
+        if (p1.Ships().size() == 0)
+        {
+            winner = 2;
+            gameEndText.setText("The game has ended. Player 2 wins!");
+            isGameEnd = true;
+//              java.lang.System.exit(0);
+        }
+        // player 2 lost
+        else if (p2.Ships().size() == 0)
+        {
+            winner = 1;
+            gameEndText.setText("The game has ended. Player 1 wins!");
+            isGameEnd = true;
+//              java.lang.System.exit(0);
+        }
 
+        // if the game has ended then display the game end screen
+        if (isGameEnd) {
+            try {
+                showEndScreen();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
       return hitThemselves;
     }
 
@@ -681,8 +719,18 @@ public class StartController {
 			}
     		
     	};
-    	
-    	
+
+    @FXML
+    public void onExitButton(ActionEvent actionEvent) {
+
+        if (winner == 1)
+            gameEndText.setText("The game has ended. Player 1 wins! Press button once more to exit.");
+        else if (winner == 2)
+            gameEndText.setText("The game has ended. Player 2 wins! Press button once more to exit.");
+        count++;
+        if (count == 2)
+            java.lang.System.exit(0);
+    }
     
 
 }

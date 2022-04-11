@@ -27,5 +27,8 @@ public class Stealthship extends Spaceship {
     health--;
   }
 
-
+  @Override
+  public int getNumShots() {
+	  return numberOfShots;
+  }
 }

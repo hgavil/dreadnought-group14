@@ -23,7 +23,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import tools.BoardButton;
 import tools.SceneBuilder;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -359,7 +358,12 @@ public class StartController {
             // keep buttons that are used disabled
             for (int i=0; i<specialAttackButtons[1].length; i++){
               if (!specialAttackButtons[1][i].Clicked())
+            	if(p2.Ships().get(i).getspecialUsed()) {
+            		specialAttackButtons[1][i].setDisable(true);
+            	}
+            	else {
                 specialAttackButtons[1][i].enable();
+            	}
               specialAttackButtons[0][i].disable();
             }
           }
@@ -369,7 +373,12 @@ public class StartController {
             // keep buttons that are used disabled
             for (int i=0; i<specialAttackButtons[0].length; i++){
               if (!specialAttackButtons[0][i].Clicked())
+            	if(p1.Ships().get(i).getspecialUsed()) {
+            		specialAttackButtons[0][i].setDisable(true);
+            	}
+            	else {
                 specialAttackButtons[0][i].enable();
+            	}
               specialAttackButtons[1][i].disable();
             }
           }
@@ -390,8 +399,7 @@ public class StartController {
           board.add(b, j, i);
         }
       }
-
-      
+           
       return board;
     } // end of createGameBoard
 
@@ -520,6 +528,51 @@ public class StartController {
         }
         specialAttackButtons[0][i] = s;
         ships.add(s, 0, i+1);
+        if ("Ships.Carrier".equals(name))
+            specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's carrier ship
+            	System.out.println("carrier clicked");
+            });
+          else if ("Ships.Corvette".equals(name))
+              specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's corvette ship
+              	System.out.println("corvette clicked");
+              });
+          else if ("Ships.Cruiser".equals(name))
+              specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's cruiser ship
+              	System.out.println("cruiser clicked");
+              });
+          else if ("Ships.Dreadnought".equals(name))
+              specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's dreadnought ship
+              	//System.out.println("dreadnought clicked");
+            	 int j = 0;
+            	 for(Ships.Spaceship e : p1.Ships()) {
+            		 if("Ships.Dreadnought".equals(e.getName())) {
+            			 if(e.getspecialUsed()) {
+            				 gameLog.clear();
+            				 gameLog.appendText("special used for this ship already!");
+            				 specialAttackButtons[0][j].setDisable(true);
+            			 }
+            			 else {
+            				 gameLog.clear();
+            				 gameLog.appendText("Deploying dreadnought's armor plating!");
+            				 p1.Ships().get(j).getSpecialAttack(gameMap.getMap());
+               				 System.out.println(p1.Ships().get(j).getHealth());
+               				 specialAttackButtons[0][j].setDisable(true);
+               				 break;
+            			 }
+            		 }
+            		 j++;
+            	 }
+            	
+              });
+          else if ("Ships.Stealthship".equals(name))
+              specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's stealthship ship
+              	System.out.println("stealthship clicked");
+              });
+          else{
+            //s = new BoardButton(0);
+            System.out.println("Something went wrong with ship buttons");
+        }
+
       }
       ships.add(pane, 0, p1.Ships().size()+1);
       ships.add(lp2, 0, p1.Ships().size()+2);
@@ -540,6 +593,48 @@ public class StartController {
           System.out.println("Something went wrong with ship buttons");
         }
         specialAttackButtons[1][i] = s;
+        if ("Ships.Carrier".equals(name))
+            specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's carrier ship 
+            	System.out.println("carrier clicked");
+            });
+          else if ("Ships.Corvette".equals(name))
+              specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's corvette ship
+              	System.out.println("corvette clicked");
+              });
+          else if ("Ships.Cruiser".equals(name))
+              specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's cruiser ship
+              	System.out.println("cruiser clicked");
+              });
+          else if ("Ships.Dreadnought".equals(name))
+              specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's cruiser ship
+             	 int j = 0;
+             	 for(Ships.Spaceship e : p2.Ships()) {
+             		 if("Ships.Dreadnought".equals(e.getName())) {
+             			 if(e.getspecialUsed()) {
+             				 gameLog.clear();
+             				 gameLog.appendText("special used for this ship already!");
+             				 specialAttackButtons[1][j].setDisable(true);
+             			 }
+             			 else {
+             				 gameLog.clear();
+             				 gameLog.appendText("Deploying dreadnought's armor plating!");
+             				 p2.Ships().get(j).getSpecialAttack(gameMap.getMap());
+                				 System.out.println(p2.Ships().get(j).getHealth());
+                				 specialAttackButtons[1][j].setDisable(true);
+                				 break;
+             			 }
+             		 }
+             		 j++;
+             	 }
+              });
+          else if ("Ships.Stealthship".equals(name))
+              specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's stealthship ship
+              	System.out.println("stealthship clicked");
+              });
+          else{
+            //s = new BoardButton(0);
+            System.out.println("Something went wrong with ship buttons");
+        }
         specialAttackButtons[1][i].disable();
         ships.add(s, 0, i+p1.Ships().size()+3);
       }

@@ -10,7 +10,6 @@ public class Corvette extends Spaceship {
 	//Corvette activates slip space thrusters for a one-time free 3 units of movement...
 	public int getSpecialAttack(Map m) {
 		System.out.println("Corvette thrusters are primed!\n");
-		System.out.println("Corvette thrusters are primed!\n");
 		if(getXPos()+3 > 10 || getYPos()+3 > 10) {
 			System.out.println("Move cannot be completed, distance traveled would exceed board space");
 			return 0;

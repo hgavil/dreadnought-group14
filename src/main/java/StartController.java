@@ -532,10 +532,85 @@ public class StartController {
             specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's carrier ship
             	System.out.println("carrier clicked");
             });
-          else if ("Ships.Corvette".equals(name))
-              specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's corvette ship
-              	System.out.println("corvette clicked");
-              });
+        else if ("Ships.Corvette".equals(name))
+            specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's corvette ship
+            int j = 0;
+            for(Ships.Spaceship e : p1.Ships()) {
+             if("Ships.Corvette".equals(e.getName())) {
+            	 if(e.getspecialUsed()) {
+     				gameLog.clear();
+     				gameLog.appendText("special used for this ship already!");
+     				specialAttackButtons[0][j].setDisable(true);
+            	 }
+            	 else {
+            		gameLog.clear();
+            		gameLog.appendText("Corvette thrusters are primed and ready!");
+            		if(e.getXPos() + 3 > 10) { // checking for niche case where x axis cannot add 3 but y axis can
+            			if(e.getYPos() + 3 > 10) {
+            				gameLog.clear();
+            				gameLog.appendText("special attack cannot be completed, not enough space present");
+            				e.setspecialUsed();
+            				specialAttackButtons[0][j].setDisable(true);
+            			}
+            			else {
+            				System.out.println("Y axis can recieve special attack");
+            				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(false);
+            				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(0);
+            				System.out.println(e.getXPos());
+            				System.out.println(e.getYPos());
+            				e.setXYPos(e.getXPos(), e.getYPos()+ 3);
+            				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(true);
+            				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(e.getOwner());
+            				e.setspecialUsed();
+            				specialAttackButtons[0][j].setDisable(true);
+            				System.out.println(e.getXPos());
+            				System.out.println(e.getYPos());
+            				break;
+            			}
+            		}
+            		else if(e.getYPos() + 3 > 10) { // checking for niche case where y axis cannot add 3 but x axis can
+            			if(e.getXPos() + 3 > 10) {
+            				gameLog.clear();
+            				gameLog.appendText("special attack cannot be completed, not enough space present");
+            				e.setspecialUsed();
+            				specialAttackButtons[0][j].setDisable(true);
+            			}
+            			else {
+            				System.out.println("X axis can recieve special attack");
+            				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(false);
+            				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(0);
+            				System.out.println(e.getXPos());
+            				System.out.println(e.getYPos());
+            				e.setXYPos(e.getXPos()+3, e.getYPos());
+            				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(true);
+            				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(e.getOwner());
+            				e.setspecialUsed();
+            				specialAttackButtons[0][j].setDisable(true);
+            				System.out.println(e.getXPos());
+            				System.out.println(e.getYPos());
+            				break;
+            			}
+            		}
+            		else { // if we got here, that means both X and Y can add 3 to them...
+        				System.out.println("both axis can recieve special attack");
+            			gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(false);
+        				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(0);
+        				System.out.println(e.getXPos());
+        				System.out.println(e.getYPos());
+        				e.setXYPos(e.getXPos()+3, e.getYPos()+3);
+        				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(true);
+        				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(e.getOwner());
+        				e.setspecialUsed();
+        				specialAttackButtons[0][j].setDisable(true);
+        				System.out.println(e.getXPos());
+        				System.out.println(e.getYPos());
+        				break;
+            		}
+            	 }
+             }
+             j++;
+             }
+             });
           else if ("Ships.Cruiser".equals(name))
               specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's cruiser ship
               	System.out.println("cruiser clicked");
@@ -566,7 +641,25 @@ public class StartController {
               });
           else if ("Ships.Stealthship".equals(name))
               specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's stealthship ship
-              	System.out.println("stealthship clicked");
+             	 int j = 0;
+             	 for(Ships.Spaceship e : p1.Ships()) {
+             		 if("Ships.Stealthship".equals(e.getName())) {
+             			 if(e.getspecialUsed()) {
+             				 gameLog.clear();
+             				 gameLog.appendText("special used for this ship already!");
+             				 specialAttackButtons[0][j].setDisable(true);
+             			 }
+             			 else {
+             				 gameLog.clear();
+             				 gameLog.appendText("Stealthship ammo reserves deployed!");
+             				 p1.Ships().get(j).getSpecialAttack(gameMap.getMap());
+             				   System.out.println(p2.Ships().get(j).getNumShots());
+                				 specialAttackButtons[0][j].setDisable(true);
+                				 break;
+             			 }
+             		 }
+             		 j++;
+             	 }
               });
           else{
             //s = new BoardButton(0);
@@ -629,7 +722,25 @@ public class StartController {
               });
           else if ("Ships.Stealthship".equals(name))
               specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's stealthship ship
-              	System.out.println("stealthship clicked");
+              	 int j = 0;
+              	 for(Ships.Spaceship e : p2.Ships()) {
+              		 if("Ships.Stealthship".equals(e.getName())) {
+              			 if(e.getspecialUsed()) {
+              				 gameLog.clear();
+              				 gameLog.appendText("special used for this ship already!");
+              				 specialAttackButtons[1][j].setDisable(true);
+              			 }
+              			 else {
+              				 gameLog.clear();
+              				 gameLog.appendText("Stealthship ammo reserves deployed!");
+              				 p2.Ships().get(j).getSpecialAttack(gameMap.getMap());
+                 		     System.out.println(p2.Ships().get(j).getNumShots());
+                 			 specialAttackButtons[1][j].setDisable(true);
+                 			 break;
+              			 }
+              		 }
+              		 j++;
+              	 }
               });
           else{
             //s = new BoardButton(0);
@@ -696,7 +807,7 @@ public class StartController {
         return gameLogVBox;
     }
     
-
+    	/* 
     	EventHandler<ActionEvent> dreadnoughtHandler = new EventHandler<ActionEvent>() {
 
 			@Override
@@ -715,6 +826,7 @@ public class StartController {
 			}
     		
     	};
+    	*/
     	EventHandler<ActionEvent> cruiserHandler = new EventHandler<ActionEvent>() {
 
 			@Override

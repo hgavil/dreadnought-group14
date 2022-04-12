@@ -1,3 +1,4 @@
+
 import Map.Square;
 import Map.Terrain;
 import Ships.*;
@@ -545,8 +546,8 @@ public class StartController {
             	 else {
             		gameLog.clear();
             		gameLog.appendText("Corvette thrusters are primed and ready!");
-            		if(e.getXPos() + 3 > 10) { // checking for niche case where x axis cannot add 3 but y axis can
-            			if(e.getYPos() + 3 > 10) {
+            		if(e.getXPos() + 3 >= 10) { // checking for niche case where x axis cannot add 3 but y axis can
+            			if(e.getYPos() + 3 >= 10) {
             				gameLog.clear();
             				gameLog.appendText("special attack cannot be completed, not enough space present");
             				e.setspecialUsed();
@@ -568,8 +569,8 @@ public class StartController {
             				break;
             			}
             		}
-            		else if(e.getYPos() + 3 > 10) { // checking for niche case where y axis cannot add 3 but x axis can
-            			if(e.getXPos() + 3 > 10) {
+            		else if(e.getYPos() + 3 >= 10) { // checking for niche case where y axis cannot add 3 but x axis can
+            			if(e.getXPos() + 3 >= 10) {
             				gameLog.clear();
             				gameLog.appendText("special attack cannot be completed, not enough space present");
             				e.setspecialUsed();
@@ -692,8 +693,83 @@ public class StartController {
             });
           else if ("Ships.Corvette".equals(name))
               specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's corvette ship
-              	System.out.println("corvette clicked");
-              });
+                      int j = 0;
+                      for(Ships.Spaceship e : p2.Ships()) {
+                       if("Ships.Corvette".equals(e.getName())) {
+                      	 if(e.getspecialUsed()) {
+               				gameLog.clear();
+               				gameLog.appendText("special used for this ship already!");
+               				specialAttackButtons[1][j].setDisable(true);
+                      	 }
+                      	 else {
+                      		gameLog.clear();
+                      		gameLog.appendText("Corvette thrusters are primed and ready!");
+                      		if(e.getXPos() + 3 >= 10) { // checking for niche case where x axis cannot add 3 but y axis can
+                      			if(e.getYPos() + 3 >= 10) {
+                      				gameLog.clear();
+                      				gameLog.appendText("special attack cannot be completed, not enough space present");
+                      				e.setspecialUsed();
+                      				specialAttackButtons[1][j].setDisable(true);
+                      			}
+                      			else {
+                      				System.out.println("Y axis can recieve special attack");
+                      				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(false);
+                      				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(0);
+                      				System.out.println(e.getXPos());
+                      				System.out.println(e.getYPos());
+                      				e.setXYPos(e.getXPos(), e.getYPos()+ 3);
+                      				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(true);
+                      				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(e.getOwner());
+                      				e.setspecialUsed();
+                      				specialAttackButtons[1][j].setDisable(true);
+                      				System.out.println(e.getXPos());
+                      				System.out.println(e.getYPos());
+                      				break;
+                      			}
+                      		}
+                      		else if(e.getYPos() + 3 >= 10) { // checking for niche case where y axis cannot add 3 but x axis can
+                      			if(e.getXPos() + 3 >= 10) {
+                      				gameLog.clear();
+                      				gameLog.appendText("special attack cannot be completed, not enough space present");
+                      				e.setspecialUsed();
+                      				specialAttackButtons[1][j].setDisable(true);
+                      			}
+                      			else {
+                      				System.out.println("X axis can recieve special attack");
+                      				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(false);
+                      				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(0);
+                      				System.out.println(e.getXPos());
+                      				System.out.println(e.getYPos());
+                      				e.setXYPos(e.getXPos()+3, e.getYPos());
+                      				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(true);
+                      				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(e.getOwner());
+                      				e.setspecialUsed();
+                      				specialAttackButtons[1][j].setDisable(true);
+                      				System.out.println(e.getXPos());
+                      				System.out.println(e.getYPos());
+                      				break;
+                      			}
+                      		}
+                      		else { // if we got here, that means both X and Y can add 3 to them...
+                  				System.out.println("both axis can recieve special attack");
+                      			gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(false);
+                  				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(0);
+                  				System.out.println(e.getXPos());
+                  				System.out.println(e.getYPos());
+                  				e.setXYPos(e.getXPos()+3, e.getYPos()+3);
+                  				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(true);
+                  				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(e.getOwner());
+                  				e.setspecialUsed();
+                  				specialAttackButtons[1][j].setDisable(true);
+                  				System.out.println(e.getXPos());
+                  				System.out.println(e.getYPos());
+                  				break;
+                      		}
+                      	 }
+                       }
+                       j++;
+                       }
+                       });
           else if ("Ships.Cruiser".equals(name))
               specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's cruiser ship
               	System.out.println("cruiser clicked");
@@ -809,7 +885,6 @@ public class StartController {
     
     	/* 
     	EventHandler<ActionEvent> dreadnoughtHandler = new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent e) {
 				for(int i = 0; i < currentPlayer.Ships().size(); i++) {
@@ -822,7 +897,6 @@ public class StartController {
 						}
 					}
 				}
-
 			}
     		
     	};

@@ -95,7 +95,7 @@ public class BoardButton extends Button{
     setTheme();
   }
 
-	void setTheme() {
+	public void setTheme() {
 		if (theme == 4)
       setStyle("-fx-color: red;"+btnWidth+btnHeight);
     else if (theme == 3)
@@ -107,13 +107,20 @@ public class BoardButton extends Button{
     else if (theme == 0)
       setStyle("-fx-color: lightgray;"+btnWidth+btnHeight);
     else
-    setStyle("-fx-color: lightgray; -fx-min-width: 100; -fx-min-height: 50");
+      setStyle("-fx-color: lightgray; -fx-min-width: 100; -fx-min-height: 50");
 	}
 
-  // 
+  public void highLightPlayerShip(){
+    setStyle("-fx-color: blue;"+btnWidth+btnHeight);
+  }
+
   public Boolean Clicked() {
 		return clicked;
 	}
+
+  public void Click(){
+    clicked = true;
+  }
 	
 	public void unclick() {
 		clicked = false;

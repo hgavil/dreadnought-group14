@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import tools.BoardButton;
 import tools.SceneBuilder;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -358,30 +359,32 @@ public class StartController {
             playerid.setText("2");
             // keep buttons that are used disabled
             for (int i=0; i<specialAttackButtons[1].length; i++){
-              if (!specialAttackButtons[1][i].Clicked())
-            	if(p2.Ships().get(i).getspecialUsed()) {
-            		specialAttackButtons[1][i].setDisable(true);
-            	}
+              // disable if used
+              if (Boolean.TRUE.equals(specialAttackButtons[0][i].Clicked()))
+                specialAttackButtons[1][i].setDisable(true);
             	else {
                 specialAttackButtons[1][i].enable();
             	}
               specialAttackButtons[0][i].disable();
             }
+
+            highlight(p2, p1, buttonGrid);
           }
           else{
             currentPlayer = p1;
             playerid.setText("1");
             // keep buttons that are used disabled
             for (int i=0; i<specialAttackButtons[0].length; i++){
-              if (!specialAttackButtons[0][i].Clicked())
-            	if(p1.Ships().get(i).getspecialUsed()) {
-            		specialAttackButtons[0][i].setDisable(true);
-            	}
+              // disable if used
+              if (Boolean.TRUE.equals(specialAttackButtons[0][i].Clicked()))
+                specialAttackButtons[0][i].setDisable(true);
             	else {
                 specialAttackButtons[0][i].enable();
             	}
               specialAttackButtons[1][i].disable();
             }
+
+            highlight(p1, p2, buttonGrid);
           }
         }
       };
@@ -400,10 +403,14 @@ public class StartController {
           board.add(b, j, i);
         }
       }
+
+      highlight(p1, p2, buttonGrid);
            
       return board;
     } // end of createGameBoard
 
+
+    // try to attackk a certain position, if the position has the oen players id return false
     private boolean attackPosition(int row, int col, BoardButton b){
       Square mapSpace = gameMap.getMap().getSpace()[row][col];
       boolean hitThemselves = false;
@@ -930,6 +937,8 @@ public class StartController {
 							
 						}
 					}
+          BoardButton button = (BoardButton) e.getSource(); // get the current button
+          button.Click();
 				}
 			
     		
@@ -948,6 +957,8 @@ public class StartController {
 						}
 					}
 				}
+        BoardButton button = (BoardButton) e.getSource(); // get the current button
+        button.Click();
 			}
     		
     	};
@@ -965,6 +976,8 @@ public class StartController {
 						}
 					}
 				}
+        BoardButton button = (BoardButton) arg0.getSource(); // get the current button
+        button.Click();
 			}
     		
     	};
@@ -997,6 +1010,8 @@ public class StartController {
 					}
 				}
 				
+        BoardButton button = (BoardButton) arg0.getSource(); // get the current button
+        button.Click();
 			}
     		
     	};
@@ -1013,5 +1028,25 @@ public class StartController {
             java.lang.System.exit(0);
     }
     
+    // highlight current player buttons and unhighlight the others
+    // pH = player to be highlighted, pUH = player to be unhighlighted
+    void highlight(Player pH, Player pUH, BoardButton[][] grid){
+      int x;
+      int y;
+      ArrayList<Spaceship> ships = pUH.Ships();
+      // unhighlight
+      for(int i=0; i<ships.size(); i++){
+        x = ships.get(i).getXPos();
+        y = ships.get(i).getYPos();
+        grid[x][y].setTheme();  // resets to original theme before highlight
+      }
 
+      ships = pH.Ships();
+      // highlight pH's ships
+      for(int i=0; i<ships.size(); i++){
+        x = ships.get(i).getXPos();
+        y = ships.get(i).getYPos();
+        grid[x][y].highLightPlayerShip();
+      }
+    }
 }

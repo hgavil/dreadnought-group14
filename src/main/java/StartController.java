@@ -566,7 +566,13 @@ public class StartController {
             				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(0);
             				System.out.println(e.getXPos());
             				System.out.println(e.getYPos());
-            				e.setXYPos(e.getXPos(), e.getYPos()+ 3);
+              				if(gameMap.getMap().getSpace()[e.getXPos()][e.getYPos() + 3].Occupied()) { // checking to see if the destination space is occupied
+              					gameLog.appendText("Special attack cannot be completed, destination is currently occupied");
+              					e.setspecialUsed();
+                  				specialAttackButtons[0][j].setDisable(true);
+                  				break;
+              				}
+            				e.setXYPos(e.getXPos(), e.getYPos()+ 3); // setting the corvette's new position
             				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(true);
             				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(e.getOwner());
             				e.setspecialUsed();
@@ -589,7 +595,13 @@ public class StartController {
             				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(0);
             				System.out.println(e.getXPos());
             				System.out.println(e.getYPos());
-            				e.setXYPos(e.getXPos()+3, e.getYPos());
+              				if(gameMap.getMap().getSpace()[e.getXPos()+3][e.getYPos()].Occupied()) { // checking to see if the destination space is occupied
+              					gameLog.appendText("Special attack cannot be completed, destination is currently occupied");
+              					e.setspecialUsed();
+                  				specialAttackButtons[0][j].setDisable(true);
+                  				break;
+              				}
+            				e.setXYPos(e.getXPos()+3, e.getYPos()); // setting the corvette's new position
             				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(true);
             				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(e.getOwner());
             				e.setspecialUsed();
@@ -605,7 +617,13 @@ public class StartController {
         				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(0);
         				System.out.println(e.getXPos());
         				System.out.println(e.getYPos());
-        				e.setXYPos(e.getXPos()+3, e.getYPos()+3);
+          				if(gameMap.getMap().getSpace()[e.getXPos()+3][e.getYPos() + 3].Occupied()) { // checking to see if the destination space is occupied
+          					gameLog.appendText("Special attack cannot be completed, destination is currently occupied");
+          					e.setspecialUsed();
+              				specialAttackButtons[0][j].setDisable(true);
+              				break;
+          				}
+        				e.setXYPos(e.getXPos()+3, e.getYPos()+3); // setting the corvette's new position
         				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(true);
         				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(e.getOwner());
         				e.setspecialUsed();
@@ -724,7 +742,13 @@ public class StartController {
                       				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(0);
                       				System.out.println(e.getXPos());
                       				System.out.println(e.getYPos());
-                      				e.setXYPos(e.getXPos(), e.getYPos()+ 3);
+                      				if(gameMap.getMap().getSpace()[e.getXPos()][e.getYPos() + 3].Occupied()) { // checking to see if the destination space is occupied
+                      					gameLog.appendText("Special attack cannot be completed, destination is currently occupied");
+                      					e.setspecialUsed();
+                          				specialAttackButtons[1][j].setDisable(true);
+                          				break;
+                      				}
+                      				e.setXYPos(e.getXPos(), e.getYPos()+ 3); // setting the corvette's new position
                       				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(true);
                       				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(e.getOwner());
                       				e.setspecialUsed();
@@ -747,7 +771,13 @@ public class StartController {
                       				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(0);
                       				System.out.println(e.getXPos());
                       				System.out.println(e.getYPos());
-                      				e.setXYPos(e.getXPos()+3, e.getYPos());
+                      				if(gameMap.getMap().getSpace()[e.getXPos()+3][e.getYPos()].Occupied()) { // checking to see if the destination space is occupied
+                      					gameLog.appendText("Special attack cannot be completed, destination is currently occupied");
+                      					e.setspecialUsed();
+                          				specialAttackButtons[1][j].setDisable(true);
+                          				break;
+                      				}
+                      				e.setXYPos(e.getXPos()+3, e.getYPos()); // setting the corvette's new position
                       				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(true);
                       				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(e.getOwner());
                       				e.setspecialUsed();
@@ -763,7 +793,13 @@ public class StartController {
                   				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(0);
                   				System.out.println(e.getXPos());
                   				System.out.println(e.getYPos());
-                  				e.setXYPos(e.getXPos()+3, e.getYPos()+3);
+                  				if(gameMap.getMap().getSpace()[e.getXPos()+3][e.getYPos() + 3].Occupied()) { // checking to see if the destination space is occupied
+                  					gameLog.appendText("Special attack cannot be completed, destination is currently occupied");
+                  					e.setspecialUsed();
+                      				specialAttackButtons[1][j].setDisable(true);
+                      				break;
+                  				}
+                  				e.setXYPos(e.getXPos()+3, e.getYPos()+3); // setting the corvette's new position
                   				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeOccupied(true);
                   				gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()].changeItem(e.getOwner());
                   				e.setspecialUsed();

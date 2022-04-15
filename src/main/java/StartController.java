@@ -743,7 +743,36 @@ public class StartController {
         specialAttackButtons[1][i] = s;
         if ("Ships.Carrier".equals(name)) // if player two selected a cruiser
             specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's carrier ship 
-            	System.out.println("carrier clicked");
+            	int j = 0; // counter for looping through ships
+            	for(Ships.Spaceship e : p2.Ships()) {
+            		if("Ships.Carrier".equals(e.getName())) {
+            			if(e.getspecialUsed()) {
+            				gameLog.clear();
+            				gameLog.appendText("special used for this ship already");
+            				specialAttackButtons[1][j].setDisable(true);
+            			}
+            			else {
+            				gameLog.clear();
+            				gameLog.appendText("Ion Beam is charged and ready!");
+            				for(int m = 0; m < 5; m++) {
+            					if(e.getYPos()+m >= 10) {
+            						gameLog.clear();
+            						gameLog.appendText("Ion beam attack exceeds board space! attack stopped after: " + m + " spaces");
+            						specialAttackButtons[1][j].setDisable(true);
+            						break;
+            					}
+            					else {
+            						if(gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()+m].Occupied()) {
+            							attackPosition(e.getXPos(),e.getYPos()+m,buttonGrid[e.getXPos()][e.getYPos()+m]);
+            							
+            						}
+            					}
+            				}
+            				specialAttackButtons[1][j].setDisable(true);
+            			}
+            		}
+            		j++;
+            	}
             }); // end of carrier event handler
           else if ("Ships.Corvette".equals(name)) // if player two selected a corvette
               specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's corvette ship

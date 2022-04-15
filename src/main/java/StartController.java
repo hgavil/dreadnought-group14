@@ -536,11 +536,40 @@ public class StartController {
         }
         specialAttackButtons[0][i] = s;
         ships.add(s, 0, i+1);
-        if ("Ships.Carrier".equals(name))
+        if ("Ships.Carrier".equals(name)) // if player one selected a carrier
             specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's carrier ship
-            	System.out.println("carrier clicked");
-            });
-        else if ("Ships.Corvette".equals(name))
+            	int j = 0; // counter for looping through ships
+            	for(Ships.Spaceship e : p1.Ships()) {
+            		if("Ships.Carrier".equals(e.getName())) {
+            			if(e.getspecialUsed()) {
+            				gameLog.clear();
+            				gameLog.appendText("special used for this ship already");
+            				specialAttackButtons[0][j].setDisable(true);
+            			}
+            			else {
+            				gameLog.clear();
+            				gameLog.appendText("Ion Beam is charged and ready!");
+            				for(int m = 0; m < 5; m++) {
+            					if(e.getYPos()+m >= 10) {
+            						gameLog.clear();
+            						gameLog.appendText("Ion beam attack exceeds board space! attack stopped after: " + m + " spaces");
+            						specialAttackButtons[0][j].setDisable(true);
+            						break;
+            					}
+            					else {
+            						if(gameMap.getMap().getSpace()[e.getXPos()][e.getYPos()+m].Occupied()) {
+            							attackPosition(e.getXPos(),e.getYPos()+m,buttonGrid[e.getXPos()][e.getYPos()+m]);
+            							
+            						}
+            					}
+            				}
+            				specialAttackButtons[0][j].setDisable(true);
+            			}
+            		}
+            		j++;
+            	}
+            }); // end of carrier event handler
+        else if ("Ships.Corvette".equals(name)) // if player one selected a corvette
             specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's corvette ship
             int j = 0;
             for(Ships.Spaceship e : p1.Ships()) {
@@ -636,12 +665,12 @@ public class StartController {
              }
              j++;
              }
-             });
-          else if ("Ships.Cruiser".equals(name))
+             }); // end of corvette event handler
+          else if ("Ships.Cruiser".equals(name)) // if player one selected a cruiser
               specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's cruiser ship
               	System.out.println("cruiser clicked");
-              });
-          else if ("Ships.Dreadnought".equals(name))
+              }); // end of cruiser event handler
+          else if ("Ships.Dreadnought".equals(name)) // if player one selected a dreadnought
               specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's dreadnought ship
               	//System.out.println("dreadnought clicked");
             	 int j = 0;
@@ -664,8 +693,8 @@ public class StartController {
             		 j++;
             	 }
             	
-              });
-          else if ("Ships.Stealthship".equals(name))
+              }); // end of dreadnought event handler
+          else if ("Ships.Stealthship".equals(name)) // if player one selected a stealthship
               specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's stealthship ship
              	 int j = 0;
              	 for(Ships.Spaceship e : p1.Ships()) {
@@ -686,7 +715,7 @@ public class StartController {
              		 }
              		 j++;
              	 }
-              });
+              }); // end of stealthship event handler
           else{
             //s = new BoardButton(0);
             System.out.println("Something went wrong with ship buttons");
@@ -712,11 +741,11 @@ public class StartController {
           System.out.println("Something went wrong with ship buttons");
         }
         specialAttackButtons[1][i] = s;
-        if ("Ships.Carrier".equals(name))
+        if ("Ships.Carrier".equals(name)) // if player two selected a cruiser
             specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's carrier ship 
             	System.out.println("carrier clicked");
-            });
-          else if ("Ships.Corvette".equals(name))
+            }); // end of carrier event handler
+          else if ("Ships.Corvette".equals(name)) // if player two selected a corvette
               specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's corvette ship
                       int j = 0;
                       for(Ships.Spaceship e : p2.Ships()) {
@@ -812,12 +841,12 @@ public class StartController {
                        }
                        j++;
                        }
-                       });
-          else if ("Ships.Cruiser".equals(name))
+                       }); // end of corvette event handler
+          else if ("Ships.Cruiser".equals(name)) // if player two selects cruiser
               specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's cruiser ship
               	System.out.println("cruiser clicked");
-              });
-          else if ("Ships.Dreadnought".equals(name))
+              }); // end of cruiser event handler
+          else if ("Ships.Dreadnought".equals(name)) // if player two selects dreadnought
               specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's cruiser ship
              	 int j = 0;
              	 for(Ships.Spaceship e : p2.Ships()) {
@@ -838,8 +867,8 @@ public class StartController {
              		 }
              		 j++;
              	 }
-              });
-          else if ("Ships.Stealthship".equals(name))
+              }); // end of dreadnought event handler
+          else if ("Ships.Stealthship".equals(name)) // if player two selectes a stealthship
               specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's stealthship ship
               	 int j = 0;
               	 for(Ships.Spaceship e : p2.Ships()) {
@@ -860,7 +889,7 @@ public class StartController {
               		 }
               		 j++;
               	 }
-              });
+              }); // end of dreadnought event handler
           else{
             //s = new BoardButton(0);
             System.out.println("Something went wrong with ship buttons");

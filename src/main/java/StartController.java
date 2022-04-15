@@ -564,6 +564,7 @@ public class StartController {
             					}
             				}
             				specialAttackButtons[0][j].setDisable(true);
+                            e.setspecialUsed();
             			}
             		}
             		j++;
@@ -666,9 +667,30 @@ public class StartController {
              j++;
              }
              }); // end of corvette event handler
+
+
           else if ("Ships.Cruiser".equals(name)) // if player one selected a cruiser
               specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's cruiser ship
               	System.out.println("cruiser clicked");
+                  int j = 0;
+                  for (Ships.Spaceship e : p1.Ships()) {
+                      if ("Ships.Cruiser".equals(e.getName())) {
+                          if(e.getspecialUsed()) {
+                              gameLog.clear();
+                              gameLog.appendText("special used for this ship already!");
+                              specialAttackButtons[0][j].setDisable(true);
+                          }
+                          // special is not used
+                          else {
+                              gameLog.clear();
+                              gameLog.appendText("Cluster bombs away!");
+                              specialAttackButtons[0][j].setDisable(true);
+                              cruiserSpecial(e.getXPos(), e.getYPos()); // do the special attack
+                              e.setspecialUsed();
+                          }
+                      } // if ("Ships.Cruiser".equals(e.getName()))
+                      j++;
+                  } // for (Ships.Spaceship e : p1.Ships())
               }); // end of cruiser event handler
           else if ("Ships.Dreadnought".equals(name)) // if player one selected a dreadnought
               specialAttackButtons[0][i].setOnAction((event) -> { // lambda event handler for player 1's dreadnought ship
@@ -769,6 +791,7 @@ public class StartController {
             					}
             				}
             				specialAttackButtons[1][j].setDisable(true);
+                            e.setspecialUsed();
             			}
             		}
             		j++;
@@ -874,6 +897,25 @@ public class StartController {
           else if ("Ships.Cruiser".equals(name)) // if player two selects cruiser
               specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's cruiser ship
               	System.out.println("cruiser clicked");
+                  int j = 0;
+                  for (Ships.Spaceship e : p2.Ships()) {
+                      if ("Ships.Cruiser".equals(e.getName())) {
+                          if(e.getspecialUsed()) {
+                              gameLog.clear();
+                              gameLog.appendText("special used for this ship already!");
+                              specialAttackButtons[0][j].setDisable(true);
+                          }
+                          // special is not used
+                          else {
+                              gameLog.clear();
+                              gameLog.appendText("Cluster bombs away!");
+                              specialAttackButtons[0][j].setDisable(true);
+                              cruiserSpecial(e.getXPos(), e.getYPos()); // do the special attack
+                              e.setspecialUsed();
+                          }
+                      } // if ("Ships.Cruiser".equals(e.getName()))
+                      j++;
+                  }
               }); // end of cruiser event handler
           else if ("Ships.Dreadnought".equals(name)) // if player two selects dreadnought
               specialAttackButtons[1][i].setOnAction((event) -> { // lambda event handler for player 2's cruiser ship
@@ -1143,4 +1185,31 @@ public class StartController {
         grid[x][y].highLightPlayerShip();
       }
     }
+
+    // function to handle the cruiser special attack
+    /*
+            cruiser special attack
+            check for hits around the area of the cruiser
+            top left, x - 1, y - 1
+            top middle x - 1, y
+            top right x - 1, y + 1
+            middle left x, y - 1
+            middle right x, y + 1
+            bottom left x + 1, y - 1
+            bottom middle x + 1, y
+            bottom right x + 1, y + 1
+         */
+    void cruiserSpecial (int xPos, int yPos) {
+        for (int m = -1; m <= 1; m++) {
+            // check to see if the xPos will be out of bounds
+            if (xPos + m >= 10  || xPos + m < 0)
+                continue;
+            for (int n = -1; n <= 1; n++) {
+                // check to see if the yPos will be out of bounds
+                if (yPos + n >= 10 || yPos + n < 0)
+                    continue;
+                attackPosition(xPos + m, yPos + n, buttonGrid[xPos + m][yPos + n]);
+            }
+        }
+    } // cruiserSpecial (int xPos, int yPos)
 }
